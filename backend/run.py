@@ -1,0 +1,12 @@
+"""Entry point for running the ForensicX backend"""
+import uvicorn
+from app.config import API_HOST, API_PORT, API_RELOAD
+
+if __name__ == '__main__':
+    print(f"Starting ForensicX at http://{API_HOST}:{API_PORT}")
+    uvicorn.run(
+        'app.main:app',
+        host=API_HOST,
+        port=API_PORT,
+        reload=API_RELOAD
+    )

@@ -1,0 +1,280 @@
+[
+  {
+    "log_id": "a0e8c071",
+    "filename": "redteam.txt",
+    "total_lines": 357,
+    "file_size": 11090,
+    "incidents": [
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074158,U66@DOM1,C17693,C2079"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074182,U66@DOM1,C17693,C1964"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074395,U66@DOM1,C17693,C1961"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074512,U66@DOM1,C17693,C423"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074519,U218@DOM1,C17693,C92"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074529,U218@DOM1,C17693,C92"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074543,U218@DOM1,C17693,C92"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074590,U218@DOM1,C17693,C5653"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074741,U66@DOM1,C17693,C1936"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074754,U66@DOM1,C17693,C1737"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074902,U66@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074927,U66@DOM1,C17693,C3380"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074955,U66@DOM1,C17693,C3635"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074964,U66@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075026,U207@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075076,U162@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075096,U1145@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075114,U453@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075158,U1480@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075345,U66@DOM1,C17693,C452"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075356,U66@DOM1,C17693,C1015"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075370,U66@DOM1,C17693,C22174"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075526,U9263@DOM1,C17693,C1015"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075605,U66@DOM1,C17693,C5439"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075609,U66@DOM1,C17693,C5439"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075721,U66@DOM1,C17693,C4106"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075884,U20@DOM1,C17693,C368"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075914,U66@DOM1,C17693,C368"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075935,U66@DOM1,C17693,C5343"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075980,U12@DOM1,C17693,C368"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1076286,U66@DOM1,C17693,C1482"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1076295,U66@DOM1,C17693,C881"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1076311,U66@DOM1,C17693,C2013"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1076662,U1480@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1076742,U453@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1076776,U162@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1076812,U207@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077008,U66@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077014,U66@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077018,U66@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077024,U66@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077048,U7507@DOM1,C17693,C486"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077076,U415@DOM1,C17693,C486"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077140,U218@DOM1,C17693,C1710"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077169,U415@DOM1,C17693,C1570"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077228,U218@DOM1,C17693,C2079"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077256,U218@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077293,U218@DOM1,C17693,C1936"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077500,U1145@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077516,U1145@DOM1,C17693,C1737"
+      }
+    ],
+    "file_metrics": {
+      "events_count": 357,
+      "critical_count": 357,
+      "high_count": 0,
+      "medium_count": 0,
+      "low_count": 0,
+      "total_incidents": 357,
+      "ioc_count": 0
+    },
+    "iocs": [],
+    "recommendations": [
+      "Isolate affected systems immediately",
+      "Initiate incident response protocol",
+      "Reset compromised credentials",
+      "Review and update firewall rules",
+      "Conduct threat hunt across infrastructure"
+    ],
+    "summary": "Detected 357 incidents: 357 Critical, 0 High severity",
+    "analysis_time": 0.001,
+    "timestamp": "2025-11-10T05:28:00.124157"
+  }
+]

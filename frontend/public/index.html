@@ -1,0 +1,1934 @@
+<!DOCTYPE html>
+<!-- saved from url=(0177)https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/f1c179d354190749cf9ff37aa70f74e6/eeefb18a-6001-4fdf-be8e-b7fadfee1588/0eb54730.html?utm_source=perplexity -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ForensicX - Digital Forensic Analysis System</title>
+    <script src="./index_files/chart.js"></script>
+    <style>
+        :root {
+            --bg-dark: #0D1117;
+            --bg-card: #1A1F3A;
+            --bg-secondary: #161B30;
+            --primary: #FF6B5B;
+            --primary-hover: #FF5544;
+            --text-light: #E1E8ED;
+            --text-secondary: #8B949E;
+            --success: #27AE60;
+            --warning: #F39C12;
+            --danger: #E74C3C;
+            --info: #3498DB;
+            --border: rgba(255, 255, 255, 0.1);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --glow: 0 0 20px rgba(255, 107, 91, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* =================== SIDEBAR =================== */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #1A1F3A 0%, #0D1117 100%);
+            padding: 32px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            border-right: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        .logo-section {
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .logo-title {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, #FF8A7B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-subtitle {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .nav-menu {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .nav-item {
+            padding: 14px 18px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), transparent);
+            transition: width 0.3s ease;
+            opacity: 0.1;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 107, 91, 0.1);
+            color: var(--text-light);
+            transform: translateX(4px);
+        }
+
+        .nav-item:hover::before {
+            width: 100%;
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, var(--primary) 0%, #FF5544 100%);
+            color: white;
+            box-shadow: var(--glow);
+            transform: translateX(0);
+        }
+
+        .nav-icon {
+            font-size: 22px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item.active .nav-icon {
+            animation: iconPulse 2s infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .model-info {
+            margin-top: auto;
+            padding: 20px;
+            background: rgba(255, 107, 91, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 107, 91, 0.2);
+        }
+
+        .model-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .model-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* =================== MAIN CONTENT =================== */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 32px;
+            width: calc(100% - 280px);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--bg-card) 0%, #252B48 100%);
+            padding: 32px;
+            border-radius: 16px;
+            margin-bottom: 32px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), #FF8A7B, var(--primary));
+            animation: gradientShift 3s ease infinite;
+            background-size: 200% 100%;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .page-title {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, white 0%, var(--text-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+
+        .case-info {
+            display: flex;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .case-info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .case-info-item strong {
+            color: var(--text-light);
+        }
+
+        /* =================== CONTENT SECTIONS =================== */
+        .content-section {
+            display: none;
+            animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* =================== METRICS =================== */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, var(--bg-card) 0%, #252B48 100%);
+            padding: 28px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent, rgba(255, 107, 91, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), var(--glow);
+            border-color: var(--primary);
+        }
+
+        .metric-card:hover::before {
+            opacity: 1;
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .metric-icon {
+            font-size: 42px;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .metric-change {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .metric-change.positive {
+            background: rgba(39, 174, 96, 0.15);
+            color: var(--success);
+        }
+
+        .metric-change.negative {
+            background: rgba(231, 76, 60, 0.15);
+            color: var(--danger);
+        }
+
+        .metric-value {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* =================== CARDS =================== */
+        .card {
+            background: var(--bg-card);
+            padding: 28px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(255, 107, 91, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .card-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* =================== BUTTONS =================== */
+        .btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, #FF5544 100%);
+            color: white;
+            box-shadow: 0 4px 16px rgba(255, 107, 91, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(255, 107, 91, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* =================== TABLES =================== */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table thead {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .table th,
+        .table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .table th {
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .table td {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .table tbody tr {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .table tbody tr:hover {
+            background: rgba(255, 107, 91, 0.05);
+        }
+
+        .table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .table tfoot {
+            background: rgba(255, 255, 255, 0.03);
+            font-weight: 600;
+        }
+
+        .table tfoot td {
+            color: var(--text-light);
+            border-bottom: none;
+        }
+
+        /* =================== SEVERITY BADGES =================== */
+        .severity-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .severity-critical {
+            background: rgba(231, 76, 60, 0.2);
+            color: var(--danger);
+            border: 1px solid rgba(231, 76, 60, 0.4);
+        }
+
+        .severity-high {
+            background: rgba(243, 156, 18, 0.2);
+            color: var(--warning);
+            border: 1px solid rgba(243, 156, 18, 0.4);
+        }
+
+        .severity-medium {
+            background: rgba(52, 152, 219, 0.2);
+            color: var(--info);
+            border: 1px solid rgba(52, 152, 219, 0.4);
+        }
+
+        .severity-low {
+            background: rgba(39, 174, 96, 0.2);
+            color: var(--success);
+            border: 1px solid rgba(39, 174, 96, 0.4);
+        }
+
+        /* =================== STATUS =================== */
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .status-complete {
+            background: rgba(39, 174, 96, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(39, 174, 96, 0.3);
+        }
+
+        .status-processing {
+            background: rgba(243, 156, 18, 0.15);
+            color: var(--warning);
+            border: 1px solid rgba(243, 156, 18, 0.3);
+        }
+
+        .status-pending {
+            background: rgba(139, 148, 158, 0.15);
+            color: var(--text-secondary);
+            border: 1px solid rgba(139, 148, 158, 0.3);
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: scale(1.1);
+            }
+        }
+
+        /* =================== PROGRESS =================== */
+        .progress-container {
+            width: 100%;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 16px 0;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #FF8A7B);
+            border-radius: 6px;
+            transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            width: 0%;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* =================== TABS =================== */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid var(--border);
+            overflow-x: auto;
+        }
+
+        .tabs::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .tabs::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        .tab {
+            padding: 14px 24px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            color: var(--text-light);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* =================== REPORT =================== */
+        .report-content {
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .report-content h2 {
+            font-size: 28px;
+            margin: 32px 0 16px 0;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .report-content h3 {
+            font-size: 20px;
+            margin: 24px 0 12px 0;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .report-content p {
+            margin-bottom: 16px;
+            font-size: 15px;
+        }
+
+        .report-content ul,
+        .report-content ol {
+            margin-left: 24px;
+            margin-bottom: 16px;
+        }
+
+        .report-content li {
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        /* =================== CHARTS =================== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 24px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 380px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        /* =================== FILE UPLOAD =================== */
+        .file-upload-section {
+            background: linear-gradient(135deg, rgba(255, 107, 91, 0.05) 0%, transparent 100%);
+            padding: 32px;
+            border-radius: 16px;
+            border: 2px dashed var(--border);
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 24px;
+        }
+
+        .file-upload-section:hover {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(255, 107, 91, 0.1) 0%, transparent 100%);
+        }
+
+        .file-upload-section.has-files {
+            border-style: solid;
+            border-color: var(--success);
+        }
+
+        .upload-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .upload-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .upload-subtext {
+            font-size: 13px;
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+
+        .file-list {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .file-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px 16px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border);
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .file-size {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .remove-file {
+            padding: 6px 12px;
+            background: rgba(231, 76, 60, 0.15);
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            color: var(--danger);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .remove-file:hover {
+            background: rgba(231, 76, 60, 0.3);
+        }
+
+        /* =================== CHAT =================== */
+        .chat-container {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 16px;
+            height: 650px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 6px;
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 14px;
+            animation: messageSlide 0.3s ease;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .message-avatar.user {
+            background: linear-gradient(135deg, var(--primary), #FF8A7B);
+        }
+
+        .message-avatar.bot {
+            background: linear-gradient(135deg, var(--info), #5DADE2);
+        }
+
+        .message-content {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 14px 18px;
+            border-radius: 12px;
+            max-width: 75%;
+            font-size: 14px;
+            line-height: 1.6;
+            border: 1px solid var(--border);
+        }
+
+        .chat-message.user .message-content {
+            background: linear-gradient(135deg, var(--primary), #FF5544);
+            border: none;
+            color: white;
+        }
+
+        .quick-questions {
+            padding: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            border-top: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .quick-question-btn {
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .quick-question-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 91, 0.3);
+        }
+
+        .chat-input-container {
+            padding: 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-light);
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 91, 0.1);
+        }
+
+        .chat-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        /* =================== RESPONSIVE =================== */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 240px;
+            }
+
+            .main-content {
+                margin-left: 240px;
+                width: calc(100% - 240px);
+                padding: 20px;
+            }
+
+            .page-title {
+                font-size: 28px;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .case-info {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- ===================== SIDEBAR ===================== -->
+        <div class="sidebar">
+            <div class="logo-section">
+                <div class="logo-title">ForensicX</div>
+                <div class="logo-subtitle">v1.0.0</div>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item active" data-page="dashboard">
+                    <span class="nav-icon">📊</span>
+                    <span>Dashboard</span>
+                </li>
+                <li class="nav-item" data-page="report">
+                    <span class="nav-icon">📋</span>
+                    <span>Report</span>
+                </li>
+                <li class="nav-item" data-page="graphs">
+                    <span class="nav-icon">📈</span>
+                    <span>Graphs</span>
+                </li>
+                <li class="nav-item" data-page="recommendations">
+                    <span class="nav-icon">💡</span>
+                    <span>Recommendations</span>
+                </li>
+                <li class="nav-item" data-page="qa">
+                    <span class="nav-icon">💬</span>
+                    <span>Q &amp; A</span>
+                </li>
+            </ul>
+
+            <div class="model-info">
+                <div class="model-label">Analysis Engine</div>
+                <div class="model-name">AI-Powered Detection</div>
+            </div>
+        </div>
+
+        <!-- ===================== MAIN CONTENT ===================== -->
+        <div class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">Digital Forensic Analysis System</h1>
+                <p class="page-subtitle">Advanced Threat Detection and Incident Response Platform</p>
+                <div class="case-info">
+                    <div class="case-info-item">
+                        <span><strong>Case ID:</strong></span>
+                        <span id="caseId">CASE-2025-1031</span>
+                    </div>
+                    <div class="case-info-item">
+                        <span><strong>Analyzed:</strong></span>
+                        <span id="analyzedDate">-</span>
+                    </div>
+                    <div class="case-info-item">
+                        <span><strong>Analyst:</strong></span>
+                        <span id="analystName">Security Team</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===================== DASHBOARD PAGE ===================== -->
+            <div class="content-section active" id="dashboard">
+                <!-- Metrics Grid -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <div class="metric-icon">📁</div>
+                            <div class="metric-change positive">
+                                <span>↑</span> <span id="filesChange">+0</span>
+                            </div>
+                        </div>
+                        <div class="metric-value" id="totalFiles">0</div>
+                        <div class="metric-label">Total Log Files</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <div class="metric-icon">📊</div>
+                            <div class="metric-change positive">
+                                <span>↑</span> <span id="eventsChange">+0%</span>
+                            </div>
+                        </div>
+                        <div class="metric-value" id="totalEvents">0</div>
+                        <div class="metric-label">Total Events Analyzed</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <div class="metric-icon">🔴</div>
+                            <div class="metric-change negative">
+                                <span>↓</span> <span id="alertsChange">-0</span>
+                            </div>
+                        </div>
+                        <div class="metric-value" id="criticalAlerts">0</div>
+                        <div class="metric-label">Critical Alerts</div>
+                    </div>
+                </div>
+
+                <!-- File Upload Section -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">📂 Data Input</h2>
+                    </div>
+
+                    <div class="file-upload-section" id="uploadSection" onclick="document.getElementById(&#39;fileInput&#39;).click()">
+                        <div class="upload-icon">📤</div>
+                        <div class="upload-text">Click to upload log files or drag &amp; drop</div>
+                        <div class="upload-subtext">Supported formats: .txt, .log (Max 50MB per file)</div>
+                        <input type="file" id="fileInput" multiple="" accept=".txt,.log" style="display: none">
+                    </div>
+
+                    <div class="file-list" id="fileList"></div>
+
+                    <div style="margin-top: 20px; display: flex; gap: 12px;">
+                        <button class="btn btn-primary" onclick="startAnalysis()">▶ Run Analysis</button>
+                        <button class="btn btn-secondary" onclick="clearFileList()">Clear Files</button>
+                    </div>
+
+                    <div class="progress-container" style="margin-top: 20px;">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">Upload files to begin analysis</div>
+                </div>
+
+                <!-- Analysis Status -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">⚡ Analysis Status</h2>
+                        <span class="status-indicator" id="analysisStatus">
+                            <span class="status-dot"></span>
+                            <span id="statusText">Ready</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Log Files Summary -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">📋 Log Files Summary</h2>
+                    </div>
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>File Name</th>
+                                    <th>Lines</th>
+                                    <th>Size (KB)</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logFilesTable">
+                                <!-- Dynamically populated -->
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td><strong>Total</strong></td>
+                                    <td><strong id="totalLines">0</strong></td>
+                                    <td><strong id="totalSize">0</strong></td>
+                                    <td>-</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- IOCs Preview -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">🎯 Indicators of Compromise (IOCs)</h2>
+                    </div>
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Value</th>
+                                    <th>Severity</th>
+                                    <th>Count</th>
+                                </tr>
+                            </thead>
+                            <tbody id="iocsTable">
+                                <!-- Dynamically populated -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===================== REPORT PAGE ===================== -->
+            <div class="content-section" id="report">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">📄 Forensic Analysis Report</h2>
+                        <div class="card-actions">
+                            <button class="btn btn-primary" onclick="downloadPDF()">⬇️ Download PDF</button>
+                            <button class="btn btn-secondary" onclick="downloadJSON()">⬇️ Download JSON</button>
+                        </div>
+                    </div>
+
+                    <div class="tabs">
+                        <button class="tab active" data-tab="executive">Executive Summary</button>
+                        <button class="tab" data-tab="findings">Findings</button>
+                        <button class="tab" data-tab="iocs-tab">IOCs</button>
+                        <button class="tab" data-tab="recommendations-tab">Recommendations</button>
+                    </div>
+
+                    <div class="tab-content active" id="executive">
+                        <div class="report-content" id="executiveContent">
+                            <p style="text-align: center; color: var(--text-secondary); padding: 40px;">
+                                Click "Run Analysis" to generate the forensic report
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="findings">
+                        <div class="report-content" id="findingsContent">
+                            <p style="text-align: center; color: var(--text-secondary); padding: 40px;">
+                                No findings available yet
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="iocs-tab">
+                        <div class="report-content" id="iocsContent">
+                            <p style="text-align: center; color: var(--text-secondary); padding: 40px;">
+                                No IOCs identified yet
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="recommendations-tab">
+                        <div class="report-content" id="recommendationsContent">
+                            <p style="text-align: center; color: var(--text-secondary); padding: 40px;">
+                                No recommendations available yet
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===================== GRAPHS PAGE ===================== -->
+            <div class="content-section" id="graphs">
+                <div class="charts-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Severity Distribution</h2>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="severityChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Incident Timeline</h2>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="timelineChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">IOC Distribution</h2>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="iocChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Top Affected Systems</h2>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="systemsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===================== RECOMMENDATIONS PAGE ===================== -->
+            <div class="content-section" id="recommendations">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">💡 Priority Mitigation Strategies</h2>
+                    </div>
+                    <div id="recommendationsList" style="display: flex; flex-direction: column; gap: 16px;">
+                        <p style="text-align: center; color: var(--text-secondary); padding: 40px;">
+                            No recommendations available yet
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===================== Q&A PAGE ===================== -->
+            <div class="content-section" id="qa">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">💬 Interactive Analysis Q &amp; A</h2>
+                        <button class="btn btn-secondary" onclick="clearChat()">Clear Chat</button>
+                    </div>
+
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="chat-message bot">
+                                <div class="message-avatar bot">🤖</div>
+                                <div class="message-content">
+                                    Hello! I'm your ForensicX AI assistant. I can help you understand the security incident findings, analyze IOCs, review affected systems, and recommend next steps. What would you like to know?
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="quick-questions">
+                            <button class="quick-question-btn" onclick="askQuestion(&#39;What\\&#39;s the attack timeline?&#39;)">Timeline?</button>
+                            <button class="quick-question-btn" onclick="askQuestion(&#39;What are top IOCs?&#39;)">Top IOCs?</button>
+                            <button class="quick-question-btn" onclick="askQuestion(&#39;Which systems affected?&#39;)">Affected Systems?</button>
+                            <button class="quick-question-btn" onclick="askQuestion(&#39;What\\&#39;s the severity?&#39;)">Severity?</button>
+                        </div>
+
+                        <div class="chat-input-container">
+                            <input type="text" class="chat-input" id="chatInput" placeholder="Ask a question about the forensic analysis...">
+                            <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===================== GLOBAL STATE =====================
+        let selectedFiles = [];
+        let currentAnalysis = null;
+        let allCharts = {};
+        const API_ROOT = '';
+
+        // ===================== INITIALIZATION =====================
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('[ForensicX] Initializing...');
+            setupEventListeners();
+            loadAnalyses();
+        });
+
+        function setupEventListeners() {
+            // File input
+            document.getElementById('fileInput').addEventListener('change', function(e) {
+                selectedFiles = Array.from(e.target.files || []);
+                renderFileList();
+            });
+
+            // Drag and drop
+            const uploadSection = document.getElementById('uploadSection');
+            uploadSection.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadSection.style.borderColor = 'var(--primary)';
+                uploadSection.style.background = 'linear-gradient(135deg, rgba(255, 107, 91, 0.15) 0%, transparent 100%)';
+            });
+
+            uploadSection.addEventListener('dragleave', () => {
+                uploadSection.style.borderColor = 'var(--border)';
+                uploadSection.style.background = 'linear-gradient(135deg, rgba(255, 107, 91, 0.05) 0%, transparent 100%)';
+            });
+
+            uploadSection.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadSection.style.borderColor = 'var(--border)';
+                uploadSection.style.background = 'linear-gradient(135deg, rgba(255, 107, 91, 0.05) 0%, transparent 100%)';
+                selectedFiles = Array.from(e.dataTransfer.files || []);
+                renderFileList();
+            });
+
+            // Navigation
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const page = this.dataset.page;
+                    switchPage(page);
+                });
+            });
+
+            // Tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabName = this.dataset.tab;
+                    switchTab(tabName);
+                });
+            });
+
+            // Chat
+            document.getElementById('chatInput').addEventListener('keypress', function(e) {
+                if(e.key === 'Enter') sendMessage();
+            });
+        }
+
+        // ===================== FILE MANAGEMENT =====================
+        function renderFileList() {
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
+            let totalSize = 0;
+
+            selectedFiles.forEach((file, idx) => {
+                const sizeMB = (file.size / 1024).toFixed(2);
+                totalSize += file.size;
+
+                const div = document.createElement('div');
+                div.className = 'file-item';
+                div.innerHTML = `
+                    <div class="file-info">
+                        <span class="file-name">📄 ${file.name}</span>
+                        <span class="file-size">${sizeMB} KB</span>
+                    </div>
+                    <button class="remove-file" onclick="removeFile(${idx})">Remove</button>
+                `;
+                fileList.appendChild(div);
+            });
+
+            if(selectedFiles.length > 0) {
+                document.getElementById('uploadSection').classList.add('has-files');
+            }
+        }
+
+        function removeFile(idx) {
+            selectedFiles.splice(idx, 1);
+            renderFileList();
+        }
+
+        function clearFileList() {
+            selectedFiles = [];
+            document.getElementById('fileInput').value = '';
+            renderFileList();
+            document.getElementById('uploadSection').classList.remove('has-files');
+        }
+
+        // ===================== ANALYSIS =====================
+        async function startAnalysis() {
+            if(selectedFiles.length === 0) {
+                alert('Please select at least one log file');
+                return;
+            }
+
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const statusText = document.getElementById('statusText');
+
+            try {
+                progressText.textContent = 'Uploading files...';
+                progressBar.style.width = '10%';
+                statusText.textContent = 'Processing...';
+
+                for(let i = 0; i < selectedFiles.length; i++) {
+                    const file = selectedFiles[i];
+                    const formData = new FormData();
+                    formData.append('file', file);
+
+                    const progress = 10 + (i / selectedFiles.length * 70);
+                    progressBar.style.width = progress + '%';
+
+                    const response = await fetch(`${API_ROOT}/api/upload`, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if(!response.ok) {
+                        throw new Error(`Upload failed: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    console.log('[Upload Success]', result);
+                    currentAnalysis = result;
+                }
+
+                progressBar.style.width = '80%';
+                progressText.textContent = 'Generating visualizations...';
+
+                await new Promise(r => setTimeout(r, 500));
+                progressBar.style.width = '100%';
+                progressText.textContent = 'Analysis complete!';
+                statusText.textContent = 'Complete';
+
+                // Reload data
+                await loadAnalyses();
+                populateReport(currentAnalysis);
+                populateGraphs(currentAnalysis);
+
+                // Switch to report
+                setTimeout(() => {
+                    switchPage('report');
+                }, 500);
+
+            } catch(err) {
+                console.error('[Analysis Error]', err);
+                progressBar.style.width = '0%';
+                progressText.textContent = 'Error: ' + err.message;
+                statusText.textContent = 'Error';
+                alert('Analysis failed: ' + err.message);
+            }
+
+            selectedFiles = [];
+            renderFileList();
+            document.getElementById('uploadSection').classList.remove('has-files');
+        }
+
+        // ===================== LOAD & DISPLAY =====================
+        async function loadAnalyses() {
+            try {
+                const response = await fetch(`${API_ROOT}/api/analyses`);
+                if(!response.ok) throw new Error(response.status);
+
+                const data = await response.json();
+                const analyses = data.analyses || [];
+                const summary = data.summary || {};
+
+                console.log('[Analyses Loaded]', analyses, summary);
+
+                // Update metrics
+                document.getElementById('totalFiles').textContent = summary.total_files || 0;
+                document.getElementById('totalEvents').textContent = (summary.total_events || 0).toLocaleString();
+                document.getElementById('criticalAlerts').textContent = summary.total_critical || 0;
+
+                // Update log files table
+                const logTable = document.getElementById('logFilesTable');
+                logTable.innerHTML = '';
+                let totalLines = 0;
+                let totalSize = 0;
+
+                analyses.forEach(a => {
+                    const tr = document.createElement('tr');
+                    const metrics = a.file_metrics || {};
+                    totalLines += metrics.events_count || 0;
+                    totalSize += (a.file_size || 0);
+
+                    tr.innerHTML = `
+                        <td>${a.filename}</td>
+                        <td>${metrics.events_count || 0}</td>
+                        <td>${Math.round((a.file_size || 0) / 1024)}</td>
+                        <td><span class="status-indicator"><span class="status-dot"></span><span>Complete</span></span></td>
+                    `;
+                    tr.style.cursor = 'pointer';
+                    tr.addEventListener('click', () => {
+                        loadAnalysisDetail(a.log_id);
+                    });
+                    logTable.appendChild(tr);
+                });
+
+                document.getElementById('totalLines').textContent = totalLines;
+                document.getElementById('totalSize').textContent = Math.round(totalSize / 1024);
+
+                // Update IOCs table
+                if(analyses.length > 0) {
+                    const iocsTable = document.getElementById('iocsTable');
+                    iocsTable.innerHTML = '';
+                    const topIOCs = (analyses[0].iocs || []).slice(0, 5);
+
+                    topIOCs.forEach(ioc => {
+                        const tr = document.createElement('tr');
+                        const type = ioc.split(':')[0];
+                        tr.innerHTML = `
+                            <td>${type}</td>
+                            <td>${ioc}</td>
+                            <td><span class="severity-badge severity-high">High</span></td>
+                            <td>1</td>
+                        `;
+                        iocsTable.appendChild(tr);
+                    });
+                }
+
+            } catch(err) {
+                console.error('[Load Analyses Error]', err);
+            }
+        }
+
+        async function loadAnalysisDetail(logId) {
+            try {
+                const response = await fetch(`${API_ROOT}/api/analysis/${logId}`);
+                if(!response.ok) throw new Error(response.status);
+
+                currentAnalysis = await response.json();
+                console.log('[Analysis Detail Loaded]', currentAnalysis);
+
+                populateReport(currentAnalysis);
+                populateGraphs(currentAnalysis);
+                switchPage('report');
+
+            } catch(err) {
+                console.error('[Load Detail Error]', err);
+            }
+        }
+
+        function populateReport(analysis) {
+            if(!analysis) return;
+
+            const metrics = analysis.file_metrics || {};
+            const incidents = analysis.incidents || [];
+            const recommendations = analysis.recommendations || [];
+
+            // Executive Summary
+            document.getElementById('executiveContent').innerHTML = `
+                <h2>Executive Summary</h2>
+                <p>${analysis.summary || 'No summary available'}</p>
+                <h3>Key Metrics</h3>
+                <ul>
+                    <li>Total Events Analyzed: <strong>${metrics.events_count || 0}</strong></li>
+                    <li>Total Incidents: <strong>${metrics.total_incidents || 0}</strong></li>
+                    <li>Critical: <strong>${metrics.critical_count || 0}</strong></li>
+                    <li>High: <strong>${metrics.high_count || 0}</strong></li>
+                    <li>Medium: <strong>${metrics.medium_count || 0}</strong></li>
+                    <li>Low: <strong>${metrics.low_count || 0}</strong></li>
+                    <li>Analysis Time: <strong>${analysis.analysis_time}s</strong></li>
+                </ul>
+            `;
+
+            // Findings
+            let findingsHTML = '<h2>Findings</h2>';
+            if(incidents.length === 0) {
+                findingsHTML += '<p>No incidents found.</p>';
+            } else {
+                incidents.slice(0, 10).forEach(inc => {
+                    findingsHTML += `
+                        <h3>${inc.type}</h3>
+                        <p><strong>Severity:</strong> <span class="severity-badge severity-${inc.severity}">${inc.severity}</span></p>
+                        <p><strong>Details:</strong> ${inc.detail}</p>
+                    `;
+                });
+            }
+            document.getElementById('findingsContent').innerHTML = findingsHTML;
+
+            // IOCs
+            let iocsHTML = '<h2>Indicators of Compromise</h2>';
+            if(analysis.iocs && analysis.iocs.length > 0) {
+                iocsHTML += '<ul>';
+                analysis.iocs.forEach(ioc => {
+                    iocsHTML += `<li>${ioc}</li>`;
+                });
+                iocsHTML += '</ul>';
+            } else {
+                iocsHTML += '<p>No IOCs identified.</p>';
+            }
+            document.getElementById('iocsContent').innerHTML = iocsHTML;
+
+            // Recommendations
+            let recsHTML = '<h2>Recommendations</h2>';
+            if(recommendations.length === 0) {
+                recsHTML += '<p>No recommendations available.</p>';
+            } else {
+                recommendations.forEach((rec, idx) => {
+                    recsHTML += `
+                        <div style="background: rgba(255,107,91,0.05); padding: 16px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid var(--primary);">
+                            <strong>${idx + 1}. ${rec}</strong>
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById('recommendationsContent').innerHTML = recsHTML;
+
+            // Populate recommendations page
+            const recsList = document.getElementById('recommendationsList');
+            recsList.innerHTML = '';
+            if(recommendations.length === 0) {
+                recsList.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 40px;">No recommendations</p>';
+            } else {
+                recommendations.forEach((rec, idx) => {
+                    const div = document.createElement('div');
+                    div.style.background = 'linear-gradient(135deg, rgba(255,107,91,0.05) 0%, transparent 100%)';
+                    div.style.padding = '20px';
+                    div.style.borderRadius = '12px';
+                    div.style.borderLeft = '4px solid var(--primary)';
+                    div.innerHTML = `
+                        <h3 style="color: var(--primary); margin-bottom: 10px;">Priority ${idx + 1}</h3>
+                        <p>${rec}</p>
+                    `;
+                    recsList.appendChild(div);
+                });
+            }
+        }
+
+        function populateGraphs(analysis) {
+            if(!analysis) return;
+
+            const metrics = analysis.file_metrics || {};
+            const incidents = analysis.incidents || [];
+
+            // Severity Distribution Pie Chart
+            const sevCtx = document.getElementById('severityChart');
+            if(sevCtx) {
+                if(allCharts.severity) allCharts.severity.destroy();
+                allCharts.severity = new Chart(sevCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Critical', 'High', 'Medium', 'Low'],
+                        datasets: [{
+                            data: [
+                                metrics.critical_count || 0,
+                                metrics.high_count || 0,
+                                metrics.medium_count || 0,
+                                metrics.low_count || 0
+                            ],
+                            backgroundColor: ['#E74C3C', '#F39C12', '#3498DB', '#27AE60'],
+                            borderColor: 'transparent'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { labels: { color: '#E1E8ED' } } }
+                    }
+                });
+            }
+
+            // Timeline Line Chart
+            const timeCtx = document.getElementById('timelineChart');
+            if(timeCtx) {
+                if(allCharts.timeline) allCharts.timeline.destroy();
+                const sevMap = { critical: 4, high: 3, medium: 2, low: 1 };
+                const timelineData = incidents.slice(0, 20).map(i => sevMap[i.severity] || 1);
+
+                allCharts.timeline = new Chart(timeCtx, {
+                    type: 'line',
+                    data: {
+                        labels: incidents.slice(0, 20).map((_, i) => 'Event ' + (i+1)),
+                        datasets: [{
+                            label: 'Severity Level',
+                            data: timelineData,
+                            borderColor: '#FF6B5B',
+                            backgroundColor: 'rgba(255, 107, 91, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { labels: { color: '#E1E8ED' } } },
+                        scales: {
+                            y: { ticks: { color: '#8B949E' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } },
+                            x: { ticks: { color: '#8B949E' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+                        }
+                    }
+                });
+            }
+
+            // IOC Distribution
+            const iocCtx = document.getElementById('iocChart');
+            if(iocCtx) {
+                if(allCharts.ioc) allCharts.ioc.destroy();
+                allCharts.ioc = new Chart(iocCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: (analysis.iocs || []).slice(0, 5),
+                        datasets: [{
+                            label: 'IOC Count',
+                            data: Array(Math.min(5, analysis.iocs?.length || 0)).fill(1),
+                            backgroundColor: '#FF6B5B'
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { labels: { color: '#E1E8ED' } } },
+                        scales: {
+                            y: { ticks: { color: '#8B949E' } },
+                            x: { ticks: { color: '#8B949E' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+                        }
+                    }
+                });
+            }
+
+            // Top Affected Systems
+            const sysCtx = document.getElementById('systemsChart');
+            if(sysCtx) {
+                if(allCharts.systems) allCharts.systems.destroy();
+                allCharts.systems = new Chart(sysCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['WEB-SERVER-01', 'DB-SERVER-02', 'APP-SERVER-03', 'WORKSTATION-15'],
+                        datasets: [{
+                            label: 'Incidents',
+                            data: [45, 32, 28, 18],
+                            backgroundColor: ['#E74C3C', '#F39C12', '#3498DB', '#27AE60']
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { labels: { color: '#E1E8ED' } } },
+                        scales: {
+                            y: { ticks: { color: '#8B949E' } },
+                            x: { ticks: { color: '#8B949E' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+                        }
+                    }
+                });
+            }
+        }
+
+        // ===================== NAVIGATION =====================
+        function switchPage(page) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(page).classList.add('active');
+
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                if(item.dataset.page === page) item.classList.add('active');
+            });
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+
+            document.querySelectorAll('.tab').forEach(t => {
+                t.classList.remove('active');
+                if(t.dataset.tab === tab) t.classList.add('active');
+            });
+        }
+
+        // ===================== DOWNLOADS =====================
+        function downloadPDF() {
+            if(!currentAnalysis) {
+                alert('No analysis to download');
+                return;
+            }
+            // In real implementation, this would call /api/report/{id}
+            alert('PDF download feature coming soon');
+        }
+
+        function downloadJSON() {
+            if(!currentAnalysis) {
+                alert('No analysis to download');
+                return;
+            }
+            const dataStr = JSON.stringify(currentAnalysis, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'analysis_' + currentAnalysis.log_id + '.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // ===================== CHAT =====================
+        function addChatMessage(role, content) {
+            const chatMessages = document.getElementById('chatMessages');
+            const div = document.createElement('div');
+            div.className = 'chat-message ' + (role === 'user' ? 'user' : 'bot');
+            div.innerHTML = `
+                <div class="message-avatar ${role === 'user' ? 'user' : 'bot'}">${role === 'user' ? '👤' : '🤖'}</div>
+                <div class="message-content">${escapeHtml(content)}</div>
+            `;
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const question = input.value.trim();
+            if(!question) return;
+
+            addChatMessage('user', question);
+            input.value = '';
+
+            if(!currentAnalysis) {
+                addChatMessage('bot', 'Please run an analysis first to ask questions.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_ROOT}/api/chat/${currentAnalysis.log_id}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question })
+                });
+
+                const data = await response.json();
+                addChatMessage('bot', data.answer);
+            } catch(err) {
+                console.error('[Chat Error]', err);
+                addChatMessage('bot', 'Error: ' + err.message);
+            }
+        }
+
+        function askQuestion(q) {
+            document.getElementById('chatInput').value = q;
+            sendMessage();
+        }
+
+        function clearChat() {
+            document.getElementById('chatMessages').innerHTML = `
+                <div class="chat-message bot">
+                    <div class="message-avatar bot">🤖</div>
+                    <div class="message-content">Chat cleared. How can I help you now?</div>
+                </div>
+            `;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+
+
+</body></html>

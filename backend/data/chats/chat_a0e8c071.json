@@ -1,0 +1,20 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "hi"
+    },
+    {
+      "role": "assistant",
+      "content": "Hi! How can I assist you today?"
+    },
+    {
+      "role": "user",
+      "content": "how many log you have found in the given file?"
+    },
+    {
+      "role": "assistant",
+      "content": "357\n\n\nAnswer Detail:\n\nThe given file has a total of 357 logs."
+    }
+  ]
+}
