@@ -116,6 +116,8 @@ def api_get_analysis(log_id: str):
         logger.error(f"Get analysis error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+# Full corrected api_upload function:
+
 @app.post('/api/upload')
 async def api_upload(file: UploadFile = File(...)):
     """Upload and analyze log file"""
@@ -136,9 +138,9 @@ async def api_upload(file: UploadFile = File(...)):
         dest.write_bytes(content)
         logger.info(f"File saved to: {dest}")
         
-        # Analyze
+        # Analyze - NOW RETURNS 5 VALUES (including recommendations)
         logger.info(f"Starting analysis for: {filename}")
-        incidents, file_metrics, summary, iocs = analyze_text(filename, text)
+        incidents, file_metrics, summary, iocs, recommendations = analyze_text(filename, text)
         logger.info(f"Analysis complete. Found {len(incidents)} incidents")
         
         # Create analysis record
@@ -147,19 +149,13 @@ async def api_upload(file: UploadFile = File(...)):
             'filename': filename,
             'total_lines': summary.get('lines', 0),
             'file_size': len(content),
-            'incidents': incidents[:50],  # Top 50 incidents
+            'incidents': incidents[:50],
             'file_metrics': file_metrics,
             'iocs': iocs,
-            'recommendations': [
-                'Isolate affected systems immediately',
-                'Initiate incident response protocol',
-                'Reset compromised credentials',
-                'Review and update firewall rules',
-                'Conduct threat hunt across infrastructure'
-            ],
+            'recommendations': recommendations,  # â† From analyzer (LLM or heuristic)
             'summary': f"Detected {file_metrics.get('total_incidents', 0)} incidents: "
-                      f"{file_metrics.get('critical_count', 0)} Critical, "
-                      f"{file_metrics.get('high_count', 0)} High severity",
+                       f"{file_metrics.get('critical_count', 0)} Critical, "
+                       f"{file_metrics.get('high_count', 0)} High severity",
             'analysis_time': round(summary.get('analysis_time', 0), 3)
         }
         
@@ -171,7 +167,6 @@ async def api_upload(file: UploadFile = File(...)):
         try:
             pie_chart = REPORTS_DIR / f"chart_severity_{log_id}.png"
             timeline_chart = REPORTS_DIR / f"chart_timeline_{log_id}.png"
-            
             make_severity_pie_chart(str(pie_chart), file_metrics)
             make_timeline_chart(str(timeline_chart), incidents)
             logger.info(f"Charts generated for: {log_id}")
@@ -193,6 +188,7 @@ async def api_upload(file: UploadFile = File(...)):
         logger.error(f"Upload error: {e}")
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
+
 
 # ============================================================================
 # CHAT ENDPOINTS
@@ -293,3 +289,4 @@ else:
 
 if __name__ == '__main__':
     logger.info("ForensicX Backend Ready")
+

@@ -1,0 +1,20 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "hi"
+    },
+    {
+      "role": "assistant",
+      "content": "I can help with: timeline analysis, IOC summary, affected systems, recommended actions, severity assessment, or attack objectives. Ask me anything about the forensic findings!"
+    },
+    {
+      "role": "user",
+      "content": "just say hello"
+    },
+    {
+      "role": "assistant",
+      "content": "I can help with: timeline analysis, IOC summary, affected systems, recommended actions, severity assessment, or attack objectives. Ask me anything about the forensic findings!"
+    }
+  ]
+}

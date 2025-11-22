@@ -1,0 +1,20 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "HI"
+    },
+    {
+      "role": "assistant",
+      "content": "- What is the total number of events in the file?\n        - How many incidents were found?\n        - What is the severity of the critical incident?\n        - What is the severity of the high incident?"
+    },
+    {
+      "role": "user",
+      "content": "hi"
+    },
+    {
+      "role": "assistant",
+      "content": "I can help with: timeline analysis, IOC summary, affected systems, recommended actions, severity assessment, or attack objectives. Ask me anything about the forensic findings!"
+    }
+  ]
+}

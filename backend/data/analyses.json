@@ -1,5 +1,1176 @@
 [
   {
+    "log_id": "59e2b338",
+    "filename": "logs.txt",
+    "total_lines": 100,
+    "file_size": 26902,
+    "incidents": [
+      {
+        "type": "Authentication",
+        "severity": "CRITICAL",
+        "confidence": 95,
+        "detail": "Multiple failed logins (>=50) from 10.0.5.39 targeting eve"
+      },
+      {
+        "type": "Network",
+        "severity": "MEDIUM",
+        "confidence": 80,
+        "detail": "Suspicious ports (4444, 3389, 31337), port scans, C2 traffic"
+      },
+      {
+        "type": "Malware",
+        "severity": "CRITICAL",
+        "confidence": 90,
+        "detail": "Ransomware behavior detected with .locked extension"
+      },
+      {
+        "type": "Data",
+        "severity": "MEDIUM",
+        "confidence": 75,
+        "detail": "Exfiltration of sensitive data from storage-03"
+      },
+      {
+        "type": "System",
+        "severity": "CRITICAL",
+        "confidence": 85,
+        "detail": "Privilege escalation on web-01"
+      },
+      {
+        "type": "Lateral Movement",
+        "severity": "MEDIUM",
+        "confidence": 70,
+        "detail": "Pass-the-hash attempt detected on storage-03"
+      },
+      {
+        "type": "Persistence",
+        "severity": "MEDIUM",
+        "confidence": 80,
+        "detail": "Scheduled task found on db-01"
+      },
+      {
+        "type": "Web Attacks",
+        "severity": "CRITICAL",
+        "confidence": 95,
+        "detail": "XSS attempt detected on workstation-15"
+      },
+      {
+        "type": "Reconnaissance",
+        "severity": "MEDIUM",
+        "confidence": 70,
+        "detail": "Port scan detected from 203.0.2.18 targets: 22,80,443"
+      },
+      {
+        "type": "APT Indicators",
+        "severity": "HIGH",
+        "confidence": 95,
+        "detail": "Multiple indicators of advanced techniques and sophisticated attacks found in the logs"
+      }
+    ],
+    "file_metrics": {
+      "events_count": 100,
+      "critical_count": 0,
+      "high_count": 0,
+      "medium_count": 0,
+      "low_count": 0,
+      "total_incidents": 10,
+      "ioc_count": 1
+    },
+    "iocs": [
+      {
+        "IP": "10.0.5.39",
+        "Port": "4444",
+        "Domain": "malicious.com",
+        "Hash": "abc123..."
+      }
+    ],
+    "recommendations": [
+      "Immediate action: Block IP 10.0.5.39, investigate port 4444 and C2 traffic, isolate storage-03 and workstation-15",
+      "Specific action: Analyze the scheduled task on db-01 for potential malicious activity, investigate XSS attack on workstation-15 further",
+      "Detailed step: Conduct a thorough analysis of the APT indicators found in the logs, identify any patterns or correlations, and take appropriate actions to mitigate the risks"
+    ],
+    "summary": "Detected 10 incidents: 0 Critical, 0 High severity",
+    "analysis_time": 0,
+    "timestamp": "2025-11-22T17:10:33.390486"
+  },
+  {
+    "log_id": "a703e376",
+    "filename": "raw_logs.txt",
+    "total_lines": 100,
+    "file_size": 8515,
+    "incidents": [
+      {
+        "type": "Authentication",
+        "severity": "high",
+        "confidence": 95,
+        "detail": "Multiple failed login attempts detected for user svc_deploy from 10.0.4.47 port=770 within a short period of time."
+      }
+    ],
+    "file_metrics": {
+      "events_count": 100,
+      "critical_count": 0,
+      "high_count": 1,
+      "medium_count": 0,
+      "low_count": 0,
+      "total_incidents": 1,
+      "ioc_count": 1
+    },
+    "iocs": [
+      {
+        "IP": "203.0.1.8",
+        "Port": "4444"
+      }
+    ],
+    "recommendations": [
+      "Block access to IP 203.0.1.8 and monitor for suspicious activity on port 4444.",
+      "Implement two-factor authentication for all users with high privileges."
+    ],
+    "summary": "Detected 1 incidents: 0 Critical, 1 High severity",
+    "analysis_time": 0,
+    "timestamp": "2025-11-21T14:05:19.259941"
+  },
+  {
+    "log_id": "bb5d0ac9",
+    "filename": "raw_logs.txt",
+    "total_lines": 100,
+    "file_size": 8515,
+    "incidents": [
+      {
+        "type": "Authentication Failure",
+        "severity": "high",
+        "confidence": 95,
+        "detail": "Nov 02 14:46:45 web-01 sshd: Failed password for user bob from 203.0.1.89"
+      },
+      {
+        "type": "Failed SSHD Permission Change",
+        "severity": "medium",
+        "confidence": 85,
+        "detail": "Nov 02 05:35:43 db-01 sshd: permissions changed admin from 203.0.1.98"
+      },
+      {
+        "type": "Unauthorized File Access Attempt",
+        "severity": "medium",
+        "confidence": 90,
+        "detail": "Nov 03 22:07:42 workstation-15 smbd: unauthorized file access attempt detected carol from 203.0.3.91 port=3490"
+      },
+      {
+        "type": "Unexpected Process Spawned",
+        "severity": "medium",
+        "confidence": 85,
+        "detail": "Nov 13 18:34:34 mail-01 mysql: unexpected process spawned svc_deploy from 203.0.2.59"
+      },
+      {
+        "type": "Checksum Verification Failure",
+        "severity": "medium",
+        "confidence": 80,
+        "detail": "Nov 16 16:45:12 mail-01 postfix: checksum verification failed svc_backup from 203.0.3.80"
+      },
+      {
+        "type": "High Number of Login Attempts",
+        "severity": "medium",
+        "confidence": 95,
+        "detail": "Nov 09 14:43:05 storage-03 cron: high number of login attempts observed svc_deploy from 10.0.4.47 port=770"
+      },
+      {
+        "type": "Unexpected Disconnect",
+        "severity": "low",
+        "confidence": 85,
+        "detail": "Nov 07 01:03:25 fw-01 iptables: checksum verification failed eve from 203.0.1.74 pid=1288"
+      },
+      {
+        "type": "Unauthorized Access to Service",
+        "severity": "medium",
+        "confidence": 95,
+        "detail": "Nov 11 20:23:32 storage-03 httpd: service started alice from 10.0.2.33 port=1142"
+      },
+      {
+        "type": "Unexpected Process Closed",
+        "severity": "low",
+        "confidence": 85,
+        "detail": "Nov 06 04:27:49 mail-01 kernel: session closed for user dave from 203.0.2.40 port=7448"
+      },
+      {
+        "type": "Unexpected Service Start",
+        "severity": "low",
+        "confidence": 85,
+        "detail": "Nov 14 16:46:01 storage-03 systemd: service started eve from 10.0.4.33 port=1763"
+      },
+      {
+        "type": "Unexpected Process Exited",
+        "severity": "low",
+        "confidence": 85,
+        "detail": "Nov 03 14:33:43 storage-03 auth: process exited with status eve from 203.0.1.99 pid=1927"
+      },
+      {
+        "type": "Unexpected DNS Query",
+        "severity": "low",
+        "confidence": 85,
+        "detail": "Nov 11 02:00:51 storage-03 kernel: dns query for alice from 10.0.1.16"
+      },
+      {
+        "type": "Unexpected Interface Link Down",
+        "severity": "low",
+        "confidence": 85,
+        "detail": "Nov 02 13:06:43 app-02 postfix: interface link is down bob from 203.0.1.3 port=671"
+      },
+      {
+        "type": "Unexpected DNS Termination",
+        "severity": "low",
+        "confidence": 85,
+        "detail": "Nov 02 20:46:26 vpn-01 dns: terminated unexpectedly unknown from 203.0.1.18"
+      },
+      {
+        "type": "Unexpected C2 Traffic",
+        "severity": "high",
+        "confidence": 95,
+        "detail": "Nov 15 13:12:07 web-01 mysql: binary checksum mismatch eve from 10.0.5.29 port=1699"
+      },
+      {
+        "type": "Unexpected Credential Theft",
+        "severity": "critical",
+        "confidence": 95,
+        "detail": "Nov 13 09:50:05 vpn-01 postfix: Accepted password for user alice from 10.0.2.46 port=3831"
+      },
+      {
+        "type": "Unexpected Registry Changes",
+        "severity": "critical",
+        "confidence": 95,
+        "detail": "Nov 06 02:42:04 auth-01 sshd: service stopped svc_deploy from 10.0.5.36"
+      }
+    ],
+    "file_metrics": {
+      "events_count": 100,
+      "critical_count": 2,
+      "high_count": 2,
+      "medium_count": 6,
+      "low_count": 7,
+      "total_incidents": 17,
+      "ioc_count": 7
+    },
+    "iocs": [
+      "IP:10.0.5.29",
+      "IP:10.0.2.46",
+      "IP:10.0.4.47",
+      "IP:203.0.2.59",
+      "Port:1699",
+      "Port:3831",
+      "Port:770"
+    ],
+    "recommendations": [
+      "Block IP addresses 10.0.5.29 and 10.0.2.46 from accessing the network.",
+      "Investigate the failed SSHD permission change for admin user.",
+      "Monitor the system for further unauthorized file access attempts.",
+      "Investigate the unexpected process spawned by svc_deploy.",
+      "Check the mail server for any suspicious activity related to checksum verification failure.",
+      "Monitor the storage server for high numbers of login attempts and investigate their origin.",
+      "Block IP address 10.0.4.47 from accessing the network.",
+      "Investigate the unexpected disconnect in firewall logs.",
+      "Allow only authorized users to start services on the storage server.",
+      "Monitor the system for any further unexpected process exits.",
+      "Block IP address 10.0.1.16 from accessing the DNS server.",
+      "Investigate the unexpected interface link down event.",
+      "Block IP address 203.0.1.18 from accessing the network.",
+      "Monitor the network for any further C2 traffic."
+    ],
+    "summary": "Detected 17 incidents: 2 Critical, 2 High severity",
+    "analysis_time": 0,
+    "timestamp": "2025-11-21T13:08:34.814050"
+  },
+  {
+    "log_id": "9ce1b7d5",
+    "filename": "raw_logs.txt",
+    "total_lines": 100,
+    "file_size": 8515,
+    "incidents": [
+      {
+        "type": "Brute_Force_Attack",
+        "severity": "high",
+        "confidence": 85,
+        "detail": "12 failed authentication attempts detected"
+      }
+    ],
+    "file_metrics": {
+      "events_count": 100,
+      "critical_count": 0,
+      "high_count": 1,
+      "medium_count": 0,
+      "low_count": 0,
+      "total_incidents": 1,
+      "ioc_count": 15
+    },
+    "iocs": [
+      "IP:203.0.3.48",
+      "IP:10.0.4.47",
+      "IP:10.0.2.25",
+      "IP:10.0.5.26",
+      "IP:203.0.3.91",
+      "IP:10.0.5.29",
+      "IP:10.0.5.36",
+      "IP:10.0.1.20",
+      "IP:10.0.2.5",
+      "IP:10.0.1.22",
+      "IP:203.0.1.40",
+      "IP:10.0.4.31",
+      "IP:203.0.1.24",
+      "IP:10.0.2.33",
+      "IP:10.0.1.28"
+    ],
+    "recommendations": [
+      "\u00f0\u0178\u201d\u0090 AUTHENTICATION: Implement account lockout after 5 failed attempts and enable MFA. Brute force attack detected - strengthen authentication controls immediately."
+    ],
+    "summary": "Detected 1 incidents: 0 Critical, 1 High severity",
+    "analysis_time": 87.171,
+    "timestamp": "2025-11-21T12:38:24.011956"
+  },
+  {
+    "log_id": "66efb5cb",
+    "filename": "raw_logs.txt",
+    "total_lines": 100,
+    "file_size": 8515,
+    "incidents": [
+      {
+        "type": "Binary Checksum Mismatch",
+        "severity": "critical",
+        "confidence": 90,
+        "detail": "A binary checksum mismatch was detected for the IP address eve from port 1699. This indicates that the data may have been tampered with or corrupted."
+      },
+      {
+        "type": "Unauthorized File Access Attempt",
+        "severity": "high",
+        "confidence": 80,
+        "detail": "An unauthorized file access attempt was detected for the user svc_deploy from IP address 10.0.4.47 port 770. This could indicate a potential malicious intent."
+      },
+      {
+        "type": "Unexpected Disconnect",
+        "severity": "medium",
+        "confidence": 75,
+        "detail": "Several unexpected disconnects were detected for various users and IP addresses. While not necessarily malicious, they could indicate a potential issue with network connectivity or configuration."
+      }
+    ],
+    "file_metrics": {
+      "events_count": 100,
+      "sample_analyzed": 100,
+      "critical_count": 1,
+      "high_count": 1,
+      "medium_count": 1,
+      "low_count": 0,
+      "total_incidents": 3,
+      "ioc_count": 3
+    },
+    "iocs": [
+      "IP:10.0.5.29",
+      "Port:1699",
+      "User:eve"
+    ],
+    "recommendations": [
+      "Investigate the binary checksum mismatch further to determine the root cause and potential impact on the system.",
+      "Implement stronger access controls to prevent unauthorized file access attempts in the future.",
+      "Conduct a thorough review of network connectivity and configuration to identify and address any potential issues."
+    ],
+    "summary": "Detected 3 incidents: 1 Critical, 1 High severity",
+    "analysis_time": 0,
+    "timestamp": "2025-11-21T12:26:55.865554"
+  },
+  {
+    "log_id": "9fa3a75d",
+    "filename": "raw_logs.txt",
+    "total_lines": 100,
+    "file_size": 8515,
+    "incidents": [],
+    "file_metrics": {
+      "events_count": 100,
+      "critical_count": 0,
+      "high_count": 0,
+      "medium_count": 0,
+      "low_count": 0,
+      "total_incidents": 0,
+      "ioc_count": 0
+    },
+    "iocs": [],
+    "recommendations": [
+      "\u00e2\u0153\u2026 MONITORING: Continue monitoring and update security detection rules. Maintain vigilance for emerging threats."
+    ],
+    "summary": "Detected 0 incidents: 0 Critical, 0 High severity",
+    "analysis_time": 84.997,
+    "timestamp": "2025-11-21T12:22:35.833062"
+  },
+  {
+    "log_id": "47687437",
+    "filename": "sample.txt",
+    "total_lines": 111,
+    "file_size": 8018,
+    "incidents": [
+      {
+        "type": "Outdated_Kernel",
+        "severity": "critical",
+        "confidence": 95,
+        "detail": "An outdated Linux kernel version (2.6.5-1.358) was detected in the system log. This outdated kernel version may contain known vulnerabilities that can be exploited by attackers."
+      },
+      {
+        "type": "ACPI_Disabled",
+        "severity": "medium",
+        "confidence": 70,
+        "detail": "ACPI was disabled due to the BIOS being too old. While not a direct threat, this may limit the system's ability to properly manage power and could potentially impact performance or security."
+      }
+    ],
+    "file_metrics": {
+      "events_count": 111,
+      "sample_analyzed": 111,
+      "critical_count": 1,
+      "high_count": 0,
+      "medium_count": 1,
+      "low_count": 0,
+      "total_incidents": 2,
+      "ioc_count": 0
+    },
+    "iocs": [],
+    "recommendations": [
+      "Update the Linux kernel to the latest version",
+      "Check for available ACPI updates in BIOS settings"
+    ],
+    "summary": "Detected 2 incidents: 1 Critical, 0 High severity",
+    "analysis_time": 0,
+    "timestamp": "2025-11-21T12:18:29.406547"
+  },
+  {
+    "log_id": "d96e66c8",
+    "filename": "raw_logs.txt",
+    "total_lines": 100,
+    "file_size": 8515,
+    "incidents": [],
+    "file_metrics": {
+      "events_count": 100,
+      "critical_count": 0,
+      "high_count": 0,
+      "medium_count": 0,
+      "low_count": 0,
+      "total_incidents": 0,
+      "ioc_count": 0
+    },
+    "iocs": [],
+    "recommendations": [
+      "\u00e2\u0153\u2026 MONITORING: Continue monitoring and update security detection rules. Maintain vigilance for emerging threats."
+    ],
+    "summary": "Detected 0 incidents: 0 Critical, 0 High severity",
+    "analysis_time": 83.943,
+    "timestamp": "2025-11-21T12:14:52.287261"
+  },
+  {
+    "log_id": "5f827e49",
+    "filename": "flows.txt",
+    "total_lines": 13,
+    "file_size": 439,
+    "incidents": [
+      {
+        "type": "PortScan",
+        "severity": "critical",
+        "confidence": 95,
+        "detail": "Multiple entries indicate repeated attempts to scan open ports on IP addresses C1423 and C1707. Potential reconnaissance activity for a potential attack."
+      },
+      {
+        "type": "Possible Command and Control",
+        "severity": "high",
+        "confidence": 85,
+        "detail": "Multiple entries show communication between IP addresses C14909 and C5720 on the same ports (2049) and same sequence number. This could be indicative of a command and control channel."
+      },
+      {
+        "type": "Unusual Traffic",
+        "severity": "medium",
+        "confidence": 75,
+        "detail": "Entries involving IP address C3587 show unusual traffic to an uncommon destination (N44) which could indicate a potential data exfiltration attempt or communication with a known malicious actor."
+      }
+    ],
+    "file_metrics": {
+      "events_count": 13,
+      "sample_analyzed": 13,
+      "critical_count": 1,
+      "high_count": 1,
+      "medium_count": 1,
+      "low_count": 0,
+      "total_incidents": 3,
+      "ioc_count": 0
+    },
+    "iocs": [],
+    "recommendations": [
+      "Block IP addresses C1423 and C1707 from accessing open ports.",
+      "Investigate further the communication between IP addresses C14909 and C5720 on port 2049.",
+      "Monitor traffic to and from IP address C3587 for any suspicious activity."
+    ],
+    "summary": "Detected 3 incidents: 1 Critical, 1 High severity",
+    "analysis_time": 0,
+    "timestamp": "2025-11-21T12:10:22.409270"
+  },
+  {
+    "log_id": "61a1145c",
+    "filename": "sample.txt",
+    "total_lines": 111,
+    "file_size": 8018,
+    "incidents": [
+      {
+        "type": "Error_Event",
+        "severity": "low",
+        "detail": "Error detected: Jun  9 06:06:20 combo kernel: There is already a security framework initialized, register_security f"
+      }
+    ],
+    "file_metrics": {
+      "events_count": 111,
+      "critical_count": 0,
+      "high_count": 0,
+      "medium_count": 0,
+      "low_count": 1,
+      "total_incidents": 1,
+      "ioc_count": 0,
+      "analysis_method": "Pattern-Based",
+      "detection_accuracy": 70.0
+    },
+    "iocs": [],
+    "recommendations": [
+      "Isolate affected systems immediately",
+      "Initiate incident response protocol",
+      "Reset compromised credentials",
+      "Review and update firewall rules",
+      "Conduct threat hunt across infrastructure"
+    ],
+    "summary": "Detected 1 incidents: 0 Critical, 0 High severity",
+    "analysis_time": 281.508,
+    "timestamp": "2025-11-19T05:01:23.425343"
+  },
+  {
+    "log_id": "1649fa21",
+    "filename": "flows.txt",
+    "total_lines": 13,
+    "file_size": 439,
+    "incidents": [
+      {
+        "type": "Malware_Execution",
+        "severity": "medium",
+        "detail": "Multiple instances of malware execution detected on the system. The malware is using various file paths and filenames, indicating attempts to evade detection by anti-virus software. The malware also appears to be communicating with a remote server over an uncommon port, potentially allowing it to receive commands or updates."
+      }
+    ],
+    "file_metrics": {
+      "events_count": 13,
+      "critical_count": 0,
+      "high_count": 0,
+      "medium_count": 1,
+      "low_count": 0,
+      "total_incidents": 1,
+      "ioc_count": 2,
+      "analysis_method": "LLM",
+      "detection_accuracy": 95.0
+    },
+    "iocs": [
+      "C1065, C3799, C4879",
+      "10.45.1.389, 1136.n1136.com, 1423.n1423.com, 8191.n8191.com, 8192.n8192.com, 8193.n8193.com"
+    ],
+    "recommendations": [
+      "Isolate affected systems immediately",
+      "Initiate incident response protocol",
+      "Reset compromised credentials",
+      "Review and update firewall rules",
+      "Conduct threat hunt across infrastructure"
+    ],
+    "summary": "Detected 1 incidents: 0 Critical, 0 High severity",
+    "analysis_time": 0.0,
+    "timestamp": "2025-11-19T04:55:54.793799"
+  },
+  {
+    "log_id": "37c705fc",
+    "filename": "Linux_2k.log",
+    "total_lines": 2000,
+    "file_size": 216485,
+    "incidents": [],
+    "file_metrics": {
+      "events_count": 2000,
+      "critical_count": 0,
+      "high_count": 0,
+      "medium_count": 0,
+      "low_count": 0,
+      "total_incidents": 0,
+      "ioc_count": 4,
+      "analysis_method": "Pattern-Based",
+      "detection_accuracy": 70.0
+    },
+    "iocs": [
+      "IP:211.46.224.253",
+      "IP:24.54.76.216",
+      "IP:218.188.2.4",
+      "IP:82.252.162.81"
+    ],
+    "recommendations": [
+      "Isolate affected systems immediately",
+      "Initiate incident response protocol",
+      "Reset compromised credentials",
+      "Review and update firewall rules",
+      "Conduct threat hunt across infrastructure"
+    ],
+    "summary": "Detected 0 incidents: 0 Critical, 0 High severity",
+    "analysis_time": 0.292,
+    "timestamp": "2025-11-18T13:12:14.125799"
+  },
+  {
+    "log_id": "a18a2360",
+    "filename": "Linux_2k.log",
+    "total_lines": 2000,
+    "file_size": 216485,
+    "incidents": [],
+    "file_metrics": {
+      "events_count": 2000,
+      "critical_count": 0,
+      "high_count": 0,
+      "medium_count": 0,
+      "low_count": 0,
+      "total_incidents": 0,
+      "ioc_count": 4,
+      "analysis_method": "Pattern-Based",
+      "detection_accuracy": 70.0
+    },
+    "iocs": [
+      "IP:211.46.224.253",
+      "IP:82.252.162.81",
+      "IP:24.54.76.216",
+      "IP:218.188.2.4"
+    ],
+    "recommendations": [
+      "Isolate affected systems immediately",
+      "Initiate incident response protocol",
+      "Reset compromised credentials",
+      "Review and update firewall rules",
+      "Conduct threat hunt across infrastructure"
+    ],
+    "summary": "Detected 0 incidents: 0 Critical, 0 High severity",
+    "analysis_time": 0.295,
+    "timestamp": "2025-11-18T13:05:38.479782"
+  },
+  {
+    "log_id": "921c08c2",
+    "filename": "Forensic_toolkit_dataset.txt",
+    "total_lines": 300,
+    "file_size": 103072,
+    "incidents": [
+      {
+        "type": "Potential_Threat_Keyword",
+        "severity": "medium",
+        "detail": "Keyword match in: {\"id\":4,\"tool_name\":\"Wireshark\",\"commands\":[\"wireshark -i eth0 -k\",\"tshark -r capture.pcap -Y 'http."
+      },
+      {
+        "type": "Error_Event",
+        "severity": "low",
+        "detail": "Error detected: {\"id\":11,\"tool_name\":\"dd\",\"commands\":[\"dd if=/dev/sda of=image.dd bs=64k conv=noerror,sync\"],\"usage\""
+      },
+      {
+        "type": "Potential_Threat_Keyword",
+        "severity": "medium",
+        "detail": "Keyword match in: {\"id\":17,\"tool_name\":\"Hashcat\",\"commands\":[\"hashcat -m 0 -a 0 hashes.txt wordlist.txt\"],\"usage\":\"Cra"
+      },
+      {
+        "type": "Potential_Threat_Keyword",
+        "severity": "medium",
+        "detail": "Keyword match in: {\"id\":18,\"tool_name\":\"John the Ripper\",\"commands\":[\"john --format=NT hashes.txt\"],\"usage\":\"Crack pas"
+      },
+      {
+        "type": "Potential_Threat_Keyword",
+        "severity": "medium",
+        "detail": "Keyword match in: {\"id\":52,\"tool_name\":\"REMnux\",\"commands\":[\"remnux-install\",\"(Tool suite, individual tool commands va"
+      },
+      {
+        "type": "Potential_Threat_Keyword",
+        "severity": "medium",
+        "detail": "Keyword match in: {\"id\":55,\"tool_name\":\"Hashlookup Forensic Analyser\",\"commands\":[\"hashlookup-forensic-analyser -f fil"
+      },
+      {
+        "type": "Potential_Threat_Keyword",
+        "severity": "medium",
+        "detail": "Keyword match in: {\"id\":56,\"tool_name\":\"IntelMQ\",\"commands\":[\"intelmqctl start\",\"intelmqctl run bot\"],\"usage\":\"Collect"
+      },
+      {
+        "type": "Potential_Threat_Keyword",
+        "severity": "medium",
+        "detail": "Keyword match in: {\"id\":60,\"tool_name\":\"Fastfinder\",\"commands\":[\"fastfinder -c config.yml -o results.json\"],\"usage\":\"F"
+      },
+      {
+        "type": "Potential_Threat_Keyword",
+        "severity": "medium",
+        "detail": "Keyword match in: {\"id\":66,\"tool_name\":\"Fidelis ThreatScanner\",\"commands\":[\"threatscanner -i ioc.xml -o report.txt\"],\""
+      },
+      {
+        "type": "Potential_Threat_Keyword",
+        "severity": "medium",
+        "detail": "Keyword match in: {\"id\":95,\"tool_name\":\"eSentire Agent\",\"commands\":[\"(Proprietary, no public CLI commands)\"],\"usage\":\""
+      },
+      {
+        "type": "Potential_Threat_Keyword",
+        "severity": "medium",
+        "detail": "Keyword match in: {\"id\":97,\"tool_name\":\"Velociraptor\",\"commands\":[\"velociraptor -c config.yaml client\",\"velociraptor h"
+      }
+    ],
+    "file_metrics": {
+      "events_count": 300,
+      "critical_count": 0,
+      "high_count": 0,
+      "medium_count": 10,
+      "low_count": 1,
+      "total_incidents": 11,
+      "ioc_count": 0,
+      "analysis_method": "Pattern-Based",
+      "detection_accuracy": 70.0
+    },
+    "iocs": [],
+    "recommendations": [
+      "Isolate affected systems immediately",
+      "Initiate incident response protocol",
+      "Reset compromised credentials",
+      "Review and update firewall rules",
+      "Conduct threat hunt across infrastructure"
+    ],
+    "summary": "Detected 11 incidents: 0 Critical, 0 High severity",
+    "analysis_time": 0.319,
+    "timestamp": "2025-11-18T13:05:15.992426"
+  },
+  {
+    "log_id": "78994d44",
+    "filename": "flows.txt",
+    "total_lines": 13,
+    "file_size": 439,
+    "incidents": [
+      {
+        "type": "Malware_Execution",
+        "severity": "medium",
+        "detail": "Multiple instances of malware execution detected on the system. The malware is using various file paths and filenames, indicating attempts to evade detection by anti-virus software. The malware also appears to be communicating with a remote server over an uncommon port, potentially allowing it to receive commands or updates."
+      }
+    ],
+    "file_metrics": {
+      "events_count": 13,
+      "critical_count": 0,
+      "high_count": 0,
+      "medium_count": 1,
+      "low_count": 0,
+      "total_incidents": 1,
+      "ioc_count": 2,
+      "analysis_method": "LLM",
+      "detection_accuracy": 95.0
+    },
+    "iocs": [
+      "10.45.1.389, 1136.n1136.com, 1423.n1423.com, 8191.n8191.com, 8192.n8192.com, 8193.n8193.com",
+      "C1065, C3799, C4879"
+    ],
+    "recommendations": [
+      "Isolate affected systems immediately",
+      "Initiate incident response protocol",
+      "Reset compromised credentials",
+      "Review and update firewall rules",
+      "Conduct threat hunt across infrastructure"
+    ],
+    "summary": "Detected 1 incidents: 0 Critical, 0 High severity",
+    "analysis_time": 0.0,
+    "timestamp": "2025-11-18T13:04:47.431480"
+  },
+  {
+    "log_id": "1baf5ebc",
+    "filename": "redteam.txt",
+    "total_lines": 357,
+    "file_size": 11090,
+    "incidents": [
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074158,U66@DOM1,C17693,C2079"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074182,U66@DOM1,C17693,C1964"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074395,U66@DOM1,C17693,C1961"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074512,U66@DOM1,C17693,C423"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074519,U218@DOM1,C17693,C92"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074529,U218@DOM1,C17693,C92"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074543,U218@DOM1,C17693,C92"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074590,U218@DOM1,C17693,C5653"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074741,U66@DOM1,C17693,C1936"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074754,U66@DOM1,C17693,C1737"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074902,U66@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074927,U66@DOM1,C17693,C3380"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074955,U66@DOM1,C17693,C3635"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1074964,U66@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075026,U207@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075076,U162@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075096,U1145@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075114,U453@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075158,U1480@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075345,U66@DOM1,C17693,C452"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075356,U66@DOM1,C17693,C1015"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075370,U66@DOM1,C17693,C22174"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075526,U9263@DOM1,C17693,C1015"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075605,U66@DOM1,C17693,C5439"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075609,U66@DOM1,C17693,C5439"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075721,U66@DOM1,C17693,C4106"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075884,U20@DOM1,C17693,C368"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075914,U66@DOM1,C17693,C368"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075935,U66@DOM1,C17693,C5343"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1075980,U12@DOM1,C17693,C368"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1076286,U66@DOM1,C17693,C1482"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1076295,U66@DOM1,C17693,C881"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1076311,U66@DOM1,C17693,C2013"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1076662,U1480@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1076742,U453@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1076776,U162@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1076812,U207@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077008,U66@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077014,U66@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077018,U66@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077024,U66@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077048,U7507@DOM1,C17693,C486"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077076,U415@DOM1,C17693,C486"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077140,U218@DOM1,C17693,C1710"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077169,U415@DOM1,C17693,C1570"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077228,U218@DOM1,C17693,C2079"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077256,U218@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077293,U218@DOM1,C17693,C1936"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077500,U1145@DOM1,C17693,C2388"
+      },
+      {
+        "type": "redteam_indicator",
+        "severity": "critical",
+        "detail": "1077516,U1145@DOM1,C17693,C1737"
+      }
+    ],
+    "file_metrics": {
+      "events_count": 357,
+      "critical_count": 357,
+      "high_count": 0,
+      "medium_count": 0,
+      "low_count": 0,
+      "total_incidents": 357,
+      "ioc_count": 0
+    },
+    "iocs": [],
+    "recommendations": [
+      "Isolate affected systems immediately",
+      "Initiate incident response protocol",
+      "Reset compromised credentials",
+      "Review and update firewall rules",
+      "Conduct threat hunt across infrastructure"
+    ],
+    "summary": "Detected 357 incidents: 357 Critical, 0 High severity",
+    "analysis_time": 0.001,
+    "timestamp": "2025-11-18T13:02:27.486811"
+  },
+  {
+    "log_id": "21923548",
+    "filename": "flows.txt",
+    "total_lines": 13,
+    "file_size": 439,
+    "incidents": [
+      {
+        "type": "short_flow_large_bytes",
+        "severity": "high",
+        "detail": "Zero-duration flow with 5323 bytes"
+      },
+      {
+        "type": "short_flow_large_bytes",
+        "severity": "high",
+        "detail": "Zero-duration flow with 3007 bytes"
+      },
+      {
+        "type": "suspicious_port",
+        "severity": "high",
+        "detail": "Suspicious destination port: 389"
+      },
+      {
+        "type": "suspicious_port",
+        "severity": "high",
+        "detail": "Suspicious destination port: 139"
+      }
+    ],
+    "file_metrics": {
+      "events_count": 13,
+      "critical_count": 0,
+      "high_count": 4,
+      "medium_count": 0,
+      "low_count": 0,
+      "total_incidents": 4,
+      "ioc_count": 2
+    },
+    "iocs": [
+      "Port:389",
+      "Port:139"
+    ],
+    "recommendations": [
+      "Isolate affected systems immediately",
+      "Initiate incident response protocol",
+      "Reset compromised credentials",
+      "Review and update firewall rules",
+      "Conduct threat hunt across infrastructure"
+    ],
+    "summary": "Detected 4 incidents: 0 Critical, 4 High severity",
+    "analysis_time": 0.0,
+    "timestamp": "2025-11-18T13:01:52.458958"
+  },
+  {
+    "log_id": "ccb3ac8d",
+    "filename": "flows.txt",
+    "total_lines": 13,
+    "file_size": 439,
+    "incidents": [
+      {
+        "type": "short_flow_large_bytes",
+        "severity": "high",
+        "detail": "Zero-duration flow with 5323 bytes"
+      },
+      {
+        "type": "short_flow_large_bytes",
+        "severity": "high",
+        "detail": "Zero-duration flow with 3007 bytes"
+      },
+      {
+        "type": "suspicious_port",
+        "severity": "high",
+        "detail": "Suspicious destination port: 389"
+      },
+      {
+        "type": "suspicious_port",
+        "severity": "high",
+        "detail": "Suspicious destination port: 139"
+      }
+    ],
+    "file_metrics": {
+      "events_count": 13,
+      "critical_count": 0,
+      "high_count": 4,
+      "medium_count": 0,
+      "low_count": 0,
+      "total_incidents": 4,
+      "ioc_count": 2
+    },
+    "iocs": [
+      "Port:389",
+      "Port:139"
+    ],
+    "recommendations": [
+      "Isolate affected systems immediately",
+      "Initiate incident response protocol",
+      "Reset compromised credentials",
+      "Review and update firewall rules",
+      "Conduct threat hunt across infrastructure"
+    ],
+    "summary": "Detected 4 incidents: 0 Critical, 4 High severity",
+    "analysis_time": 0.0,
+    "timestamp": "2025-11-18T12:55:14.303858"
+  },
+  {
+    "log_id": "137e1f8d",
+    "filename": "Linux_2k.log",
+    "total_lines": 2000,
+    "file_size": 216485,
+    "incidents": [],
+    "file_metrics": {
+      "events_count": 2000,
+      "critical_count": 0,
+      "high_count": 0,
+      "medium_count": 0,
+      "low_count": 0,
+      "total_incidents": 0,
+      "ioc_count": 0
+    },
+    "iocs": [],
+    "recommendations": [
+      "Isolate affected systems immediately",
+      "Initiate incident response protocol",
+      "Reset compromised credentials",
+      "Review and update firewall rules",
+      "Conduct threat hunt across infrastructure"
+    ],
+    "summary": "Detected 0 incidents: 0 Critical, 0 High severity",
+    "analysis_time": 0.006,
+    "timestamp": "2025-11-18T12:54:49.501533"
+  },
+  {
     "log_id": "a0e8c071",
     "filename": "redteam.txt",
     "total_lines": 357,
