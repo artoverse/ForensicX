@@ -4,14 +4,14 @@ A production-ready, offline-capable digital forensic analyzer that processes sec
 
 ## Features
 
-✅ **Log Analysis** - Process process, network flow, DNS, and redteam logs
-✅ **Anomaly Detection** - Heuristic-based detection of suspicious activities
-✅ **Interactive Dashboard** - Real-time visualization of findings
-✅ **PDF Reports** - Professional incident reports
-✅ **Q&A Chat** - Interactive Q&A with rule-based fallback
-✅ **Optional LLM** - Enhanced insights using Phi-3 model (optional)
-✅ **Offline First** - No internet required
-✅ **macOS M2 Compatible** - ARM64 support
+1. **Log Analysis** - Process process, network flow, DNS, and redteam logs
+2. **Anomaly Detection** - Heuristic-based detection of suspicious activities
+3. **Interactive Dashboard** - Real-time visualization of findings
+4. **PDF Reports** - Professional incident reports
+5. **Q&A Chat** - Interactive Q&A with rule-based fallback
+6. **Optional LLM** - Enhanced insights using Phi-3 model (optional)
+7. **Offline First** - No internet required
+8. **macOS M2 Compatible** - ARM64 support
 
 ## Quick Start (macOS)
 
@@ -198,20 +198,20 @@ For issues or questions, please refer to the API documentation or check backend 
 ### Quick Deployment Checklist
 
 ```
-✅ backend/app/__init__.py          - 1 line
-✅ backend/app/config.py            - 32 lines
-✅ backend/app/utils.py             - 67 lines
-✅ backend/app/analyzer.py          - 180 lines (complete)
-✅ backend/app/visualizer.py        - 95 lines
-✅ backend/app/llm_service.py       - 75 lines
-✅ backend/app/chat_manager.py      - 85 lines
-✅ backend/app/main.py              - 220 lines (complete)
-✅ backend/run.py                   - 8 lines
-✅ backend/requirements.txt          - 7 packages
-✅ backend/run_backend.sh            - 45 lines (executable)
-✅ frontend/public/index.html        - Use provided forensicx.html as-is
-✅ frontend/public/controller.js     - 450+ lines (complete rewrite)
-✅ README.md                         - Full setup guide
+ backend/app/__init__.py          
+ backend/app/config.py            
+ backend/app/utils.py             
+ backend/app/analyzer.py          
+ backend/app/visualizer.py        
+ backend/app/llm_service.py       
+ backend/app/chat_manager.py      
+ backend/app/main.py              
+ backend/run.py                   
+ backend/requirements.txt          
+ backend/run_backend.sh            
+ frontend/public/index.html        
+ frontend/public/controller.js     
+ README.md                         
 ```
 
 ### File Size Summary
