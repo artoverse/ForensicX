@@ -1,0 +1,20 @@
+Nov 15 13:12:07,web-01,mysql,binary checksum mismatch,eve,10.0.5.29,1699
+Nov 14 16:46:01,storage-03,systemd,unexpected process spawned,unknown,10.0.5.26,
+Nov 09 15:11:44,auth-01,audit,unauthorized file access attempt,svc_deploy,10.0.1.45,
+Nov 09 14:43:05,storage-03,cron,high number of login attempts,svc_deploy,10.0.4.47,770
+Nov 13 18:34:34,mail-01,mysql,unexpected process spawned,svc_deploy,203.0.2.59,
+Nov 07 18:59:53,storage-03,dns,unexpected disconnect,dave,203.0.2.33,8857
+Nov 09 07:14:10,auth-01,audit,authentication failure,dave,203.0.1.24,2823
+Nov 04 15:11:44,proxy-01,audit,unexpected disconnect,eve,10.0.5.21,
+Nov 15 21:57:31,proxy-01,iptables,unexpected disconnect,jdoe,203.0.1.22,4060
+Nov 03 14:33:43,storage-03,auth,process exited with status,eve,203.0.1.99,
+Nov 13 09:50:05,vpn-01,postfix,accepted password,alice,10.0.2.46,3831
+Nov 06 04:27:49,mail-01,kernel,session closed,dave,203.0.2.40,7448
+Nov 06 13:41:10,workstation-15,postfix,dns query,eve,10.0.5.25,
+Nov 01 17:31:51,auth-01,postfix,session opened,eve,10.0.5.17,
+Nov 12 14:16:31,db-01,auth,session closed,alice,10.0.4.7,6936
+Nov 02 10:41:24,proxy-01,dns,service started,jdoe,203.0.1.8,208
+Nov 04 14:22:29,web-01,mysql,service started,eve,10.0.4.33,1763
+Nov 01 00:18:38,auth-01,vpn,session closed,alice,203.0.2.22,
+Nov 05 11:09:14,mail-01,postfix,mail delivered successfully,bob,10.0.3.18,
+Nov 08 08:55:42,auth-01,systemd,scheduled maintenance completed,root,localhost,

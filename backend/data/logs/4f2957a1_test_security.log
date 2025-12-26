@@ -1,0 +1,41 @@
+# Test Log File - Save as test_security.log
+# This file contains patterns that should be detected by the analyzer
+
+# Suspicious processes
+2024-11-23 10:15:23 Process started: mimikatz.exe on host 192.168.1.100
+2024-11-23 10:16:45 Process started: nc.exe -l -p 4444 on host 192.168.1.101
+2024-11-23 10:18:30 Detected executable: psexec.exe running on WORKSTATION-01
+
+# Network activity
+2024-11-23 10:20:15 Connection established to 185.220.101.45:443 (Tor exit node)
+2024-11-23 10:22:30 DNS query for evil-phishing-site.com from 192.168.1.105
+2024-11-23 10:25:10 Outbound connection to cryptominer.pool.com:8333
+2024-11-23 10:28:45 Port scan detected: 192.168.1.200 scanning ports 21-445
+
+# Authentication events
+2024-11-23 10:30:00 Failed login attempt for user admin from 203.0.113.42
+2024-11-23 10:30:05 Failed login attempt for user root from 203.0.113.42
+2024-11-23 10:30:10 Failed login attempt for user administrator from 203.0.113.42
+2024-11-23 10:30:15 Failed login attempt for user backup from 203.0.113.42
+2024-11-23 10:30:20 Failed login attempt for user test from 203.0.113.42
+
+# Malicious domains
+2024-11-23 10:35:00 HTTP request to ransomware-c2.evil.com
+2024-11-23 10:36:15 DNS resolution for banking-phish.com
+2024-11-23 10:38:30 Connection attempt to malware-download.xyz
+
+# SQL injection attempts
+2024-11-23 10:40:00 Web request: /login.php?user=admin' OR '1'='1
+2024-11-23 10:41:20 Database query detected: SELECT * FROM users WHERE id=1; DROP TABLE users--
+
+# File system events
+2024-11-23 10:45:00 File created: C:\Windows\Temp\payload.exe
+2024-11-23 10:46:30 Registry modification: HKLM\Software\Microsoft\Windows\CurrentVersion\Run
+2024-11-23 10:48:15 Suspicious file access: /etc/shadow by process apache2
+
+# High severity events
+2024-11-23 10:50:00 CRITICAL: Ransomware encryption detected on multiple files
+2024-11-23 10:52:30 ALERT: Lateral movement detected from 192.168.1.50 to 192.168.1.60
+2024-11-23 10:55:00 WARNING: Privilege escalation attempt by user lowpriv
+
+# End of test log

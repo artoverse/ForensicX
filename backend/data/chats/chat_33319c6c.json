@@ -1,0 +1,12 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Which systems affected?"
+    },
+    {
+      "role": "assistant",
+      "content": "Affected systems show repeated authentication failures, abnormal DNS queries, and connections to suspicious external IPs."
+    }
+  ]
+}

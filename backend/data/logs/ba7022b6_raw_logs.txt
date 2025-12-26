@@ -1,0 +1,100 @@
+Nov 15 13:12:07 web-01 mysql: binary checksum mismatch eve from 10.0.5.29 port=1699
+Nov 13 09:50:05 vpn-01 postfix: Accepted password for user alice from 10.0.2.46 port=3831
+Nov 14 16:46:01 storage-03 systemd: unexpected process spawned unknown from 10.0.5.26
+Nov 04 15:11:44 proxy-01 audit: error: unexpected disconnect eve from 10.0.5.21
+Nov 09 15:29:06 auth-01 audit: unauthorized file access attempt detected svc_deploy from 10.0.1.45
+Nov 09 14:43:05 storage-03 cron: high number of login attempts observed svc_deploy from 10.0.4.47 port=770
+Nov 06 04:27:49 mail-01 kernel: session closed for user dave from 203.0.2.40 port=7448
+Nov 09 07:14:10 auth-01 audit: authentication failure dave from 203.0.1.24 port=2823
+Nov 06 13:41:10 workstation-15 postfix: dns query for eve from 10.0.5.25
+Nov 01 17:31:51 auth-01 postfix: session opened for user eve from 10.0.5.17
+Nov 15 21:57:31 proxy-01 iptables: error: unexpected disconnect jdoe from 203.0.1.22 port=4060
+Nov 13 18:34:34 mail-01 mysql: unexpected process spawned svc_deploy from 203.0.2.59
+Nov 12 14:16:31 db-01 auth: session closed for user alice from 10.0.4.7 port=6936
+Nov 02 10:41:24 proxy-01 dns: service started jdoe from 203.0.1.8 port=208
+Nov 03 14:33:43 storage-03 auth: process exited with status eve from 203.0.1.99 pid=1927
+Nov 04 14:22:29 web-01 mysql: service started eve from 10.0.4.33 port=1763
+Nov 07 18:59:53 storage-03 dns: error: unexpected disconnect dave from 203.0.2.33 port=8857
+Nov 01 00:18:38 auth-01 vpn: session closed for user alice from 203.0.2.22
+Nov 06 11:32:56 vpn-01 kernel: permissions changed bob from 203.0.3.48
+Nov 03 22:07:42 workstation-15 smbd: unauthorized file access attempt detected carol from 203.0.3.91 port=3490
+Nov 16 16:45:12 mail-01 postfix: checksum verification failed svc_backup from 203.0.3.80
+Nov 06 02:42:04 auth-01 sshd: service stopped svc_deploy from 10.0.5.36
+Nov 02 14:46:45 web-01 systemd: Failed password for user bob from 203.0.1.89
+Nov 07 08:05:42 workstation-15 systemd: error: unexpected disconnect unknown from 203.0.3.35 pid=4081
+Nov 05 07:59:06 db-01 iptables: high number of login attempts observed admin from 203.0.2.84 port=7671
+Nov 02 05:35:43 db-01 sshd: permissions changed admin from 203.0.1.98
+Nov 05 07:52:34 workstation-15 httpd: restarted automatically admin from 203.0.1.36
+Nov 11 02:00:51 storage-03 kernel: dns query for alice from 10.0.1.16
+Nov 10 05:57:31 workstation-15 systemd: Failed password for user admin from 10.0.4.19 pid=6309
+Nov 07 00:50:59 workstation-15 cron: file modified admin from 203.0.3.49 pid=2636
+Nov 05 22:53:03 vpn-01 mysql: Failed password for user unknown from 203.0.1.72 port=841
+Nov 11 20:23:32 storage-03 httpd: service started alice from 10.0.2.33 port=1142
+Nov 02 13:06:43 app-02 postfix: interface link is down bob from 203.0.1.3 port=671
+Nov 02 20:46:26 vpn-01 dns: terminated unexpectedly unknown from 203.0.1.18
+Nov 07 01:03:25 fw-01 iptables: checksum verification failed eve from 203.0.1.74 pid=1288
+Nov 15 03:14:36 db-01 kernel: configuration file updated unknown from 203.0.3.69 pid=4445
+Nov 02 13:34:56 app-02 audit: restarted automatically eve from 203.0.2.99 port=4976
+Nov 15 21:09:33 web-01 iptables: connection attempt from unknown from 10.0.3.7
+Nov 03 10:27:47 storage-03 httpd: connection attempt from eve from 10.0.5.16 port=3355
+Nov 15 10:22:54 mail-01 smbd: unauthorized file access attempt detected jdoe from 10.0.2.3 pid=1612
+Nov 02 00:04:00 auth-01 auth: dns query for carol from 203.0.1.19 port=7259
+Nov 10 17:34:35 web-01 kernel: file modified bob from 10.0.4.3 pid=9038
+Nov 14 06:07:35 fw-01 postfix: Failed password for user carol from 203.0.1.66 pid=6074
+Nov 05 18:43:43 app-02 iptables: high number of login attempts observed bob from 203.0.2.67
+Nov 05 00:41:56 proxy-01 sshd: permissions changed carol from 203.0.1.91 pid=6845
+Nov 04 14:56:50 db-01 postfix: network connection closed alice from 10.0.5.28 pid=3369
+Nov 07 22:40:52 app-02 systemd: authentication failure alice from 10.0.4.48 pid=6628
+Nov 02 13:54:49 mail-01 audit: packet dropped unknown from 203.0.3.100
+Nov 06 22:39:11 vpn-01 cron: session closed for user alice from 203.0.2.95 pid=5763
+Nov 14 19:04:32 db-01 postfix: configuration file updated svc_deploy from 203.0.1.11
+Nov 12 19:56:59 storage-03 iptables: high number of login attempts observed dave from 203.0.2.92 port=5429
+Nov 08 03:26:42 db-01 mysql: service started eve from 203.0.1.67 pid=6791
+Nov 16 20:46:18 storage-03 httpd: unexpected process spawned dave from 203.0.2.39 pid=2951
+Nov 13 11:14:53 web-01 cron: configuration file updated eve from 203.0.2.91 pid=9602
+Nov 11 01:16:28 app-02 smbd: permissions changed jdoe from 10.0.4.24 port=4669
+Nov 16 02:33:40 vpn-01 audit: process exited with status bob from 10.0.5.41
+Nov 04 08:28:01 web-01 systemd: interface link is up jdoe from 10.0.2.25 port=6810
+Nov 14 02:23:12 proxy-01 vpn: binary checksum mismatch admin from 10.0.4.2 pid=190
+Nov 05 23:30:11 storage-03 vpn: service stopped alice from 203.0.1.6
+Nov 11 13:45:42 storage-03 smbd: terminated unexpectedly svc_deploy from 203.0.3.4 port=7011
+Nov 11 03:31:57 fw-01 mysql: checksum verification failed jdoe from 203.0.1.16 port=4563
+Nov 12 00:39:40 app-02 cron: session opened for user jdoe from 203.0.1.43 pid=3941
+Nov 08 06:36:57 storage-03 kernel: error: unexpected disconnect carol from 10.0.5.37 port=2523
+Nov 05 20:50:04 proxy-01 postfix: service stopped svc_backup from 203.0.3.28
+Nov 10 13:27:24 vpn-01 mysql: process exited with status alice from 203.0.2.40 pid=7914
+Nov 07 19:04:48 proxy-01 postfix: permissions changed unknown from 10.0.5.26 pid=8099
+Nov 10 22:01:31 web-01 postfix: authentication failure svc_backup from 203.0.2.65
+Nov 15 03:50:34 web-01 postfix: interface link is down svc_deploy from 10.0.1.28
+Nov 11 12:08:11 web-01 cron: terminated unexpectedly admin from 10.0.5.17 pid=7549
+Nov 09 15:03:17 proxy-01 cron: network connection closed bob from 10.0.1.20 pid=8937
+Nov 06 02:27:41 db-01 auth: process exited with status alice from 10.0.1.32
+Nov 15 03:19:09 app-02 httpd: authentication failure jdoe from 10.0.3.18 pid=9340
+Nov 16 22:00:16 auth-01 httpd: interface link is up svc_deploy from 10.0.3.18
+Nov 14 04:02:01 mail-01 dns: packet dropped admin from 10.0.5.4
+Nov 16 20:45:49 mail-01 iptables: session closed for user svc_deploy from 10.0.1.43 pid=5788
+Nov 16 01:16:23 db-01 smbd: Accepted password for user svc_backup from 203.0.2.81 pid=8131
+Nov 09 05:48:40 workstation-15 mysql: unexpected process spawned carol from 10.0.4.31 port=4445
+Nov 13 05:54:49 workstation-15 vpn: permissions changed admin from 203.0.1.25
+Nov 07 08:19:56 workstation-15 systemd: interface link is down jdoe from 203.0.2.39 pid=5611
+Nov 08 09:30:11 workstation-15 systemd: unauthorized file access attempt detected svc_backup from 203.0.1.99 port=4546
+Nov 01 05:32:33 app-02 kernel: permissions changed dave from 203.0.2.67 port=3957
+Nov 11 20:00:41 workstation-15 vpn: session opened for user alice from 203.0.1.52 port=6645
+Nov 06 12:52:19 vpn-01 audit: service stopped jdoe from 203.0.3.94 port=6991
+Nov 13 12:35:21 auth-01 mysql: unauthorized file access attempt detected jdoe from 203.0.1.64
+Nov 05 09:10:20 db-01 mysql: process exited with status unknown from 10.0.4.40 port=3565
+Nov 12 00:26:17 vpn-01 auth: interface link is up unknown from 203.0.1.40 pid=1747
+Nov 06 04:14:23 fw-01 cron: file modified alice from 203.0.3.97
+Nov 02 05:46:35 mail-01 mysql: dns query for carol from 203.0.3.53 port=220
+Nov 07 11:17:30 workstation-15 vpn: restarted automatically svc_backup from 10.0.2.3
+Nov 02 11:41:25 workstation-15 kernel: dns query for svc_deploy from 10.0.2.5 port=2464
+Nov 07 21:56:05 app-02 kernel: process exited with status unknown from 203.0.2.77 port=3717
+Nov 09 15:44:28 workstation-15 cron: unexpected process spawned svc_deploy from 203.0.1.63 port=1006
+Nov 03 06:11:48 app-02 iptables: unauthorized file access attempt detected dave from 10.0.2.34
+Nov 13 13:27:04 fw-01 sshd: checksum verification failed admin from 203.0.3.32
+Nov 07 13:20:45 mail-01 mysql: session opened for user jdoe from 10.0.5.40 pid=4434
+Nov 03 14:40:34 app-02 iptables: unauthorized file access attempt detected carol from 10.0.3.46
+Nov 07 23:59:38 vpn-01 cron: session closed for user jdoe from 203.0.3.30 pid=5082
+Nov 12 09:19:34 workstation-15 vpn: interface link is up bob from 10.0.1.41 port=5300
+Nov 06 16:44:01 db-01 systemd: interface link is down svc_deploy from 10.0.1.22
+Nov 11 16:57:33 workstation-15 cron: interface link is down carol from 203.0.2.97 pid=8156

@@ -1,0 +1,12 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Which systems affected?"
+    },
+    {
+      "role": "assistant",
+      "content": "Based on the provided forensic analysis summary, the specific systems that were affected are not mentioned. The analysis focuses on incident types and their respective Confidence levels. To determine which systems were impacted, further investigation would be required using system logs or other relevant data sources."
+    }
+  ]
+}

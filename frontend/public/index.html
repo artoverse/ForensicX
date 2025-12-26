@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ForensicX - Digital Forensic Analysis System</title>
     <script src="./index_files/chart.js"></script>
+    <script src="app.js"></script>
     <style>
         :root {
             --bg-dark: #0D1117;
@@ -1141,7 +1142,7 @@
                     <div class="file-list" id="fileList"></div>
 
                     <div style="margin-top: 20px; display: flex; gap: 12px;">
-                        <button class="btn btn-primary" onclick="startAnalysis()">▶ Run Analysis</button>
+                        <button class="btn btn-primary" onclick="uploadAndAnalyze()">▶ Run Analysis</button>
                         <button class="btn btn-secondary" onclick="clearFileList()">Clear Files</button>
                     </div>
 
@@ -1223,6 +1224,9 @@
                         <div class="card-actions">
                             <button class="btn btn-primary" onclick="downloadPDF()">⬇️ Download PDF</button>
                             <button class="btn btn-secondary" onclick="downloadJSON()">⬇️ Download JSON</button>
+                            <button class="btn btn-primary" onclick="openChatForCurrentLog()" style="margin-left: 10px;">
+                            💬 Open Chat
+                            </button>
                         </div>
                     </div>
 
@@ -1230,7 +1234,8 @@
                         <button class="tab active" data-tab="executive">Executive Summary</button>
                         <button class="tab" data-tab="findings">Findings</button>
                         <button class="tab" data-tab="iocs-tab">IOCs</button>
-                        <button class="tab" data-tab="recommendations-tab">Recommendations</button>
+                        <button class="tab" data-tab="recommendations-tab">Recommendations
+                        </button>
                     </div>
 
                     <div class="tab-content active" id="executive">
@@ -1326,7 +1331,7 @@
             <div class="content-section" id="qa">
                 <div class="card">
                     <div class="card-header">
-                        <h2 class="card-title">💬 Interactive Analysis Q &amp; A</h2>
+                        <h2 class="card-title">💬 Interactive Analysis Q &amp; A</h2> 
                         <button class="btn btn-secondary" onclick="clearChat()">Clear Chat</button>
                     </div>
 
@@ -1341,10 +1346,10 @@
                         </div>
 
                         <div class="quick-questions">
-                            <button class="quick-question-btn" onclick="askQuestion(&#39;What\\&#39;s the attack timeline?&#39;)">Timeline?</button>
-                            <button class="quick-question-btn" onclick="askQuestion(&#39;What are top IOCs?&#39;)">Top IOCs?</button>
-                            <button class="quick-question-btn" onclick="askQuestion(&#39;Which systems affected?&#39;)">Affected Systems?</button>
-                            <button class="quick-question-btn" onclick="askQuestion(&#39;What\\&#39;s the severity?&#39;)">Severity?</button>
+                            <button class="quick-question-btn" onclick="askQuestion('What\'s the attack timeline?')">Timeline?</button>
+                            <button class="quick-question-btn" onclick="askQuestion('What are top IOCs?')">Top IOCs?</button>
+                            <button class="quick-question-btn" onclick="askQuestion('Which systems affected?')">Affected Systems?</button>
+                            <button class="quick-question-btn" onclick="askQuestion('What\'s the severity?')">Severity?</button>
                         </div>
 
                         <div class="chat-input-container">
@@ -1357,7 +1362,7 @@
         </div>
     </div>
 
-    <script>
+    <!-- <script>
         // ===================== GLOBAL STATE =====================
         let selectedFiles = [];
         let currentAnalysis = null;
@@ -1928,7 +1933,7 @@
             div.textContent = text;
             return div.innerHTML;
         }
-    </script>
+    </script> -->
 
 
 </body></html>

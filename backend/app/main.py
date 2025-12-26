@@ -8,9 +8,11 @@ import json
 import traceback
 import logging
 
+
 # Setup logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
+
 
 from .utils import gen_id, save_analysis, list_analyses, get_analysis_by_id
 from .analyzer import analyze_text
@@ -19,12 +21,14 @@ from .chat_manager import answer_question, get_chat_history, add_to_chat_history
 from .config import DATA_DIR, LOGS_DIR, REPORTS_DIR, CHATS_DIR, FRONTEND_DIR
 from .config import USE_LLM
 
+
 # Initialize FastAPI
 app = FastAPI(
     title="ForensicX",
     description="Digital Forensic Analysis System",
     version="1.0.0"
 )
+
 
 # CORS middleware - allow all for development
 app.add_middleware(
@@ -34,14 +38,26 @@ app.add_middleware(
     allow_headers=['*']
 )
 
+
 # Create required directories
 for d in [DATA_DIR, LOGS_DIR, REPORTS_DIR, CHATS_DIR]:
     d.mkdir(parents=True, exist_ok=True)
     logger.info(f"✓ Directory ready: {d}")
 
+
 # ============================================================================
 # HEALTH & STATUS ENDPOINTS
 # ============================================================================
+
+import base64
+
+def save_base64_image(data_url, out_path):
+    # Accepts data URL ("data:image/png;base64,....") and filepath
+    if data_url and data_url.startswith("data:image"):
+        header, encoded = data_url.split(',', 1)
+        with open(out_path, "wb") as f:
+            f.write(base64.b64decode(encoded))
+
 
 @app.get('/health')
 def health_check():
@@ -53,6 +69,7 @@ def health_check():
         'llm_available': USE_LLM
     }
 
+
 @app.get('/api/status')
 def api_status():
     """Get system status"""
@@ -60,7 +77,7 @@ def api_status():
         analyses = list_analyses()
         total_events = sum(a.get('file_metrics', {}).get('events_count', 0) for a in analyses)
         total_critical = sum(a.get('file_metrics', {}).get('critical_count', 0) for a in analyses)
-        
+
         return {
             'total_analyses': len(analyses),
             'total_events_analyzed': total_events,
@@ -71,9 +88,11 @@ def api_status():
         logger.error(f"Status error: {e}")
         return {'error': str(e)}
 
+
 # ============================================================================
 # ANALYSIS ENDPOINTS
 # ============================================================================
+
 
 @app.get('/api/analyses')
 def api_list_analyses():
@@ -81,17 +100,17 @@ def api_list_analyses():
     try:
         analyses = list_analyses()
         logger.info(f"Loaded {len(analyses)} analyses")
-        
+
         total_files = len(analyses)
         total_events = sum(a.get('file_metrics', {}).get('events_count', 0) for a in analyses)
         total_critical = sum(a.get('file_metrics', {}).get('critical_count', 0) for a in analyses)
-        
+
         summary = {
             'total_files': total_files,
             'total_events': total_events,
             'total_critical': total_critical
         }
-        
+
         return {
             'analyses': analyses,
             'summary': summary
@@ -99,6 +118,7 @@ def api_list_analyses():
     except Exception as e:
         logger.error(f"List analyses error: {e}")
         return {'analyses': [], 'summary': {'total_files': 0, 'total_events': 0, 'total_critical': 0}}
+
 
 @app.get('/api/analysis/{log_id}')
 def api_get_analysis(log_id: str):
@@ -116,53 +136,66 @@ def api_get_analysis(log_id: str):
         logger.error(f"Get analysis error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
-# Full corrected api_upload function:
 
 @app.post('/api/upload')
 async def api_upload(file: UploadFile = File(...)):
     """Upload and analyze log file"""
     try:
         logger.info(f"Upload started: {file.filename}")
-        
+
         # Read file
         content = await file.read()
         text = content.decode('utf-8', errors='ignore')
         logger.info(f"File read: {len(text)} characters")
-        
+
         # Generate IDs
         log_id = gen_id()
         filename = file.filename or 'unknown'
-        
+
         # Save uploaded file
         dest = LOGS_DIR / f"{log_id}_{filename}"
         dest.write_bytes(content)
         logger.info(f"File saved to: {dest}")
-        
+
         # Analyze - NOW RETURNS 5 VALUES (including recommendations)
         logger.info(f"Starting analysis for: {filename}")
         incidents, file_metrics, summary, iocs, recommendations = analyze_text(filename, text)
         logger.info(f"Analysis complete. Found {len(incidents)} incidents")
-        
+        print('SUMMARY TYPE:', type(summary), 'SUMMARY VALUE:', summary)
+
+        # Defensive conversion to always work with dict
+        if isinstance(summary, dict):
+            summary_exec = summary.get('executive', '')
+            summary_meta = summary.get('metadata', {})
+        else:
+            summary_exec = summary
+            summary_meta = {}
+
         # Create analysis record
         record = {
             'log_id': log_id,
             'filename': filename,
-            'total_lines': summary.get('lines', 0),
+            'total_lines': summary_meta.get('lines', 0),
             'file_size': len(content),
             'incidents': incidents[:50],
             'file_metrics': file_metrics,
             'iocs': iocs,
-            'recommendations': recommendations,  # â† From analyzer (LLM or heuristic)
-            'summary': f"Detected {file_metrics.get('total_incidents', 0)} incidents: "
-                       f"{file_metrics.get('critical_count', 0)} Critical, "
-                       f"{file_metrics.get('high_count', 0)} High severity",
-            'analysis_time': round(summary.get('analysis_time', 0), 3)
+            'recommendations': recommendations,
+            'summary': summary_exec,
+            'summary_stats': f"Detected {file_metrics.get('total_incidents', 0)} incidents: "
+                            f"{file_metrics.get('critical_count', 0)} Critical, "
+                            f"{file_metrics.get('high_count', 0)} High severity",
+            'analysis_time': round(summary_meta.get('analysis_time', 0), 3),
+            'timestamp': summary_meta.get('timestamp', '')
         }
-        
+
+
+
+
         # Save analysis
         save_analysis(record)
         logger.info(f"Analysis saved with ID: {log_id}")
-        
+
         # Generate visualizations
         try:
             pie_chart = REPORTS_DIR / f"chart_severity_{log_id}.png"
@@ -172,18 +205,10 @@ async def api_upload(file: UploadFile = File(...)):
             logger.info(f"Charts generated for: {log_id}")
         except Exception as e:
             logger.warning(f"Chart generation error: {e}")
-        
-        # Generate PDF
-        try:
-            pdf_path = REPORTS_DIR / f"report_{log_id}.pdf"
-            generate_pdf_report(str(pdf_path), record)
-            logger.info(f"PDF report generated for: {log_id}")
-        except Exception as e:
-            logger.warning(f"PDF generation error: {e}")
-        
+
         logger.info(f"Upload complete: {log_id}")
         return JSONResponse(content=record)
-    
+
     except Exception as e:
         logger.error(f"Upload error: {e}")
         traceback.print_exc()
@@ -194,6 +219,7 @@ async def api_upload(file: UploadFile = File(...)):
 # CHAT ENDPOINTS
 # ============================================================================
 
+
 @app.post('/api/chat/{log_id}')
 async def api_chat(log_id: str, request: Request):
     """Chat endpoint for Q&A"""
@@ -201,19 +227,21 @@ async def api_chat(log_id: str, request: Request):
         logger.info(f"Chat request for analysis: {log_id}")
         data = await request.json()
         question = data.get('question', '').strip()
-        
+
+        conversation_context = []
+
         if not question:
             return {'error': 'Question required'}
-        
+
         logger.info(f"Question: {question}")
-        
+
         # Get answer
         answer = answer_question(log_id, question)
-        
+
         # Save to history
         add_to_chat_history(log_id, 'user', question)
         add_to_chat_history(log_id, 'assistant', answer)
-        
+
         logger.info(f"Answer provided for: {log_id}")
         return {
             'question': question,
@@ -222,6 +250,7 @@ async def api_chat(log_id: str, request: Request):
     except Exception as e:
         logger.error(f"Chat error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.get('/api/chat/{log_id}/history')
 def api_get_chat_history(log_id: str):
@@ -233,27 +262,48 @@ def api_get_chat_history(log_id: str):
         logger.error(f"Chat history error: {e}")
         return {'messages': []}
 
+
 # ============================================================================
 # REPORT & CHART ENDPOINTS
 # ============================================================================
 
-@app.get('/api/report/{log_id}')
-def api_get_report(log_id: str):
-    """Download PDF report"""
+
+from fastapi import Body
+
+@app.post("/api/report/pdf/{log_id}")
+async def post_pdf_report(log_id: str, request: Request):
+    """
+    Accepts analysis data and chart images, generates PDF and returns it
+    """
     try:
-        pdf_path = REPORTS_DIR / f"report_{log_id}.pdf"
-        if pdf_path.exists():
-            return FileResponse(
-                pdf_path,
-                media_type='application/pdf',
-                filename=f"forensicx_report_{log_id}.pdf"
-            )
-        raise HTTPException(status_code=404, detail='Report not found')
-    except HTTPException:
-        raise
+        logger.info(f"PDF download request for: {log_id}")
+        data = await request.json()
+        analysis = data["analysis"]
+        images = data.get("images", {})
+
+        # Save uploaded chart images (from frontend Chart.js)
+        for key, imgdata in images.items():
+            img_path = REPORTS_DIR / f"{log_id}_{key}.png"
+            save_base64_image(imgdata, img_path)
+
+        # Call your PDF generator (which tries to embed the above images)
+        pdf_path = generate_pdf_report(log_id, analysis)
+
+        if not pdf_path or not Path(pdf_path).exists():
+            logger.error(f"PDF file not created at: {pdf_path}")
+            raise HTTPException(status_code=500, detail="PDF generation failed")
+
+        logger.info(f"Returning PDF from: {pdf_path}")
+        return FileResponse(
+            path=str(pdf_path),
+            media_type='application/pdf',
+            filename=f"forensicx_report_{log_id}.pdf"
+        )
     except Exception as e:
-        logger.error(f"Report error: {e}")
+        logger.error(f"PDF download error: {e}")
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.get('/api/chart/{chart_type}/{log_id}')
 def api_get_chart(chart_type: str, log_id: str):
@@ -265,10 +315,10 @@ def api_get_chart(chart_type: str, log_id: str):
             chart_path = REPORTS_DIR / f'chart_timeline_{log_id}.png'
         else:
             raise HTTPException(status_code=400, detail='Invalid chart type')
-        
+
         if chart_path.exists():
             return FileResponse(chart_path, media_type='image/png')
-        
+
         raise HTTPException(status_code=404, detail='Chart not found')
     except HTTPException:
         raise
@@ -276,9 +326,11 @@ def api_get_chart(chart_type: str, log_id: str):
         logger.error(f"Chart error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+
 # ============================================================================
 # STATIC FILES & FRONTEND
 # ============================================================================
+
 
 # Mount frontend at root
 if FRONTEND_DIR.exists():
@@ -287,6 +339,6 @@ if FRONTEND_DIR.exists():
 else:
     logger.warning(f"Frontend directory not found: {FRONTEND_DIR}")
 
+
 if __name__ == '__main__':
     logger.info("ForensicX Backend Ready")
-

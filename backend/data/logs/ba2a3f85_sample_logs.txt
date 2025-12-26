@@ -1,0 +1,108 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2867
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Dec 01 07:22:31 dc-01 sshd: Failed password for root from 192.168.50.23 port 49837 ssh2\
+Dec 01 07:23:02 dc-01 sshd: Accepted password for admin from 192.168.50.20 port 50194 ssh2\
+Dec 01 07:25:10 web-02 nginx: Error reading configuration file /etc/nginx/nginx.conf\
+Dec 01 07:25:33 db-12 mysql: Connection denied for user 'eve' from 10.1.1.118\
+Dec 01 07:26:17 core-03 kernel: USB device 0472:1001 failed to initialize\
+Dec 01 07:27:54 vpn-15 openvpn: TLS authentication failed from 185.35.66.203\
+Dec 01 07:29:29 mail-10 postfix: Possible spam detected from 212.102.45.12\
+Dec 01 07:31:14 firewall-05 iptables: Dropped incoming connection from 38.115.74.1 port 61395\
+Dec 01 07:34:55 web-02 nginx: Unexpected HTTP method received: CONNECT\
+Dec 01 07:36:21 sec-02 audit: Unauthorized attempt to access /home/admin/secrets.txt from 10.2.8.49\
+Dec 01 07:37:44 nas-21 systemd: Service docker restarted by user sysop\
+Dec 01 07:40:20 mail-10 postfix: User alice authenticated from 192.168.70.245\
+Dec 01 07:41:01 core-03 kernel: High rate of ICMP echo requests detected from 178.91.81.12\
+Dec 01 07:43:17 printer-03 cups: Print job failed for user guest\
+Dec 01 07:45:00 app-14 python: Unexpected exception ValueError in module sysadmin\
+Dec 01 07:47:50 web-18 nginx: SSL certificate expired for domain secure.shop.com\
+Dec 01 07:48:21 sec-02 audit: File /tmp/malware.sh executed by user bob\
+Dec 01 07:49:34 siem-12 alert: Brute force login detected targeting user 'guest'\
+Dec 01 07:53:06 router-07 kernel: Network interface eth0 disabled by admin\
+Dec 01 07:54:23 ad-03 powershell: Suspicious powershell command detected from user 'sales'\
+Dec 01 07:56:15 hr-10 winlogon: User login failed for employee.id=004321\
+Dec 01 07:58:27 core-03 kernel: Disk error on /dev/sda1: Read-only state entered\
+Dec 01 08:01:12 db-12 mysql: Table corruption detected for payroll_2023\
+Dec 01 08:02:02 vpn-15 openvpn: Connected to 185.35.66.203\
+Dec 01 08:03:33 core-03 kernel: Unauthorized privilege escalation detected for UID 5014\
+Dec 01 08:05:19 sec-02 audit: Multiple failed access attempts to /etc/ssh/sshd_config\
+Dec 01 08:07:25 web-02 nginx: SQL injection attempt blocked for /users/login\
+Dec 01 08:08:45 ad-03 EventLog: User 'itadmin' added to 'Domain Admins' group\
+Dec 01 08:10:54 mail-10 postfix: Executed suspicious binary /usr/bin/mkpayload\
+Dec 01 08:12:15 vpn-15 openvpn: Unusual disconnect pattern detected\
+Dec 01 08:13:22 hr-10 winlogon: Password changed successfully for employee.id=004321\
+Dec 01 08:14:50 db-12 mysql: Replication lag exceeded critical threshold\
+Dec 01 08:17:39 web-02 nginx: XSS attack attempt logged for /search?query=<script>\
+Dec 01 08:19:01 sec-02 audit: Sudo usage from IP 10.6.2.87\
+Dec 01 08:21:17 printer-03 cups: Unauthorized USB device inserted\
+Dec 01 08:23:07 firewall-05 iptables: Allowed port scan from 38.115.74.1 (exception rule)\
+Dec 01 08:25:31 core-03 kernel: Kernel panic detected: Out of memory\
+Dec 01 08:26:42 nas-21 systemd: Backup service failed scheduled run\
+Dec 01 08:28:09 sec-02 audit: File /etc/passwd modified by user mike\
+Dec 01 08:29:21 ad-03 powershell: Malicious script blocked by AMSI\
+Dec 01 08:31:13 siem-12 alert: Multiple suspicious outbound connections from HR-10\
+Dec 01 08:34:26 web-02 nginx: Unauthorized upload attempt for file payroll.xls\
+Dec 01 08:36:57 mail-10 postfix: Authentication error for user 'bob' from 203.91.22.153\
+Dec 01 08:39:10 core-03 kernel: Unsigned driver loaded: C:\\\\windows\\\\system32\\\\tmpdrv.sys\
+Dec 01 08:41:12 sec-02 audit: Privilege escalation detected for process PID 1872\
+Dec 01 08:43:56 vpn-15 openvpn: Failed key exchange with 10.4.2.33\
+Dec 01 08:45:21 nas-21 systemd: RAID array resync started by sysadmin\
+Dec 01 08:48:05 web-18 nginx: Unexpected request rate spike from 91.27.221.4\
+Dec 01 08:51:40 sec-02 audit: File deletion event for /var/log/auth.log by user root\
+Dec 01 08:53:02 ad-03 EventLog: User 'eve' removed from 'HR' group\
+Dec 01 08:55:17 mail-10 postfix: Spam email detected from 178.44.66.12\
+Dec 01 08:56:48 hr-10 winlogon: Failed password change attempt for employee.id=003298\
+Dec 01 08:59:25 core-03 kernel: Multiple SSH login attempts from 203.0.113.9\
+Dec 01 09:01:13 firewall-05 iptables: Port forwarding rule changed\
+Dec 01 09:03:57 web-02 nginx: Cross-site scripting attempt with encoded payload\
+Dec 01 09:06:21 siem-12 alert: Ransomware signature detected on nas-21\
+Dec 01 09:09:44 ad-03 powershell: Process injection attempt by user 'alice'\
+Dec 01 09:11:33 sec-02 audit: Network scanning behavior from host 10.8.32.113\
+Dec 01 09:13:07 printer-03 cups: Job cancelled by remote device 192.168.31.6\
+Dec 01 09:15:52 core-03 kernel: Overwrite attempt blocked for /etc/shadow\
+Dec 01 09:18:26 vpn-15 openvpn: Connection throttled due to repeated misuse\
+Dec 01 09:21:44 mail-10 postfix: Message delayed due to content filter\
+Dec 01 09:24:08 db-12 mysql: Unauthorized dump request denied for user 'eve'\
+Dec 01 09:26:33 web-02 nginx: DDoS attack signature detected from IP 145.102.31.29\
+Dec 01 09:29:15 nas-21 systemd: Disk replacement started by sysadmin\
+Dec 01 09:31:38 sec-02 audit: Possible rootkit activity discovered\
+Dec 01 09:33:55 hr-10 winlogon: Account locked for employee.id=002155 after 5 failed logins\
+Dec 01 09:36:04 ad-03 EventLog: Critical event flagged for server backup failure\
+Dec 01 09:38:22 core-03 kernel: Process terminated: suspicious PID 3018\
+Dec 01 09:41:09 web-18 nginx: Login attempt blocked from region RU\
+Dec 01 09:43:57 sec-02 audit: Unauthorized cron job created by user mike\
+Dec 01 09:46:34 firewall-05 iptables: Firewall rules reloaded by admin\
+Dec 01 09:48:19 mail-10 postfix: Alert - bulk email broadcast detected\
+Dec 01 09:51:03 hr-10 winlogon: Valid login for employee.id=004321\
+Dec 01 09:53:16 nas-21 systemd: Unusual S.M.A.R.T value detected: temperature high\
+Dec 01 09:56:09 siem-12 alert: Honeytoken triggered by IP 128.66.154.8\
+Dec 01 09:59:21 sec-02 audit: Failed attempt to disable audit logging\
+Dec 01 10:01:36 web-02 nginx: Unusual POST request with large payload from 88.43.77.19\
+Dec 01 10:03:49 ad-03 powershell: Encoded command execution attempt detected\
+Dec 01 10:06:27 core-03 kernel: Unsafe system path modification attempt found\
+Dec 01 10:08:58 db-12 mysql: Administrative login from unexpected location 172.20.22.2\
+Dec 01 10:11:24 firewall-05 iptables: Drop rule added for suspicious IP 221.15.7.13\
+Dec 01 10:14:44 mail-10 postfix: Malicious attachment detected in received email\
+Dec 01 10:17:36 hr-10 winlogon: Password reset for employee.id=005362\
+Dec 01 10:19:51 sec-02 audit: Unauthorized SSH key added by user 'sysop'\
+Dec 01 10:21:32 printer-03 cups: Print completed for sensitive document 'financial_report.pdf'\
+Dec 01 10:24:19 ad-03 EventLog: User 'hr_manager' permissions changed in HR system\
+Dec 01 10:26:07 nas-21 systemd: Scheduled backup completed successfully\
+Dec 01 10:28:36 web-18 nginx: Failed login attempt from blacklisted IP 82.172.18.32\
+Dec 01 10:30:57 mail-10 postfix: Return-path spoofing detected in message header\
+Dec 01 10:34:21 core-03 kernel: Unsafe SELinux mode detected\
+Dec 01 10:36:45 sec-02 audit: USB device blocked by security policy\
+Dec 01 10:38:03 db-12 mysql: Unusual ALTER command detected for finance table\
+Dec 01 10:41:27 ad-03 powershell: Attempt to bypass execution policy detected\
+Dec 01 10:44:52 siem-12 alert: ARP poisoning detected on subnet 10.5.1.0/24\
+Dec 01 10:47:31 nas-21 systemd: Filesystem remount event by user 'sysop'\
+Dec 01 10:50:14 web-02 nginx: Login rate limit triggered for user 'root'\
+Dec 01 10:53:09 mail-10 postfix: Outbound relay denied for unauthenticated user\
+Dec 01 10:56:21 firewall-05 iptables: Possible SYN flood: 500 connections in 30 seconds\
+Dec 01 10:59:38 core-03 kernel: New user account \'91testadmin\'92 created\
+}

@@ -1,0 +1,12 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "What are top IOCs?"
+    },
+    {
+      "role": "assistant",
+      "content": "Top IOCs identified: suspicious destination ports (3389, 4444), orphan process starts, suspicious domains (.xyz, .tk), and DNS flood patterns."
+    }
+  ]
+}
