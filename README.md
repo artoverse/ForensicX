@@ -1,144 +1,166 @@
-# ForensicX - Digital Forensic Analysis System
+# ForensicX — Digital Forensic Analysis System
 
-A production-ready, offline-capable digital forensic analyzer that processes security logs and detects anomalies using heuristics and optional LLM integration.
+A production-ready digital forensic analyzer that processes security logs and detects anomalies using heuristics and optional AI analysis powered by **HuggingFace hosted LLM** (no local model required).
 
 ## Features
 
-1. **Log Analysis** - Process process, network flow, DNS, and redteam logs
-2. **Anomaly Detection** - Heuristic-based detection of suspicious activities
-3. **Interactive Dashboard** - Real-time visualization of findings
-4. **PDF Reports** - Professional incident reports
-5. **Q&A Chat** - Interactive Q&A with rule-based fallback
-6. **Optional LLM** - Enhanced insights using Phi-3 model (optional)
-7. **Offline First** - No internet required
-8. **macOS M2 Compatible** - ARM64 support
+| Feature | Description |
+|---------|-------------|
+| 📋 **Log Analysis** | Process process, network flow, DNS, and red-team logs |
+| 🔍 **Anomaly Detection** | 9-layer heuristic engine detects 30+ threat types |
+| 🤖 **AI Analysis** | HuggingFace-powered deep analysis via Mistral-7B (free) |
+| 💬 **Q&A Chat** | Ask questions about findings in natural language |
+| 📊 **Dashboard** | Real-time visualization of incidents and IOCs |
+| 📄 **PDF Reports** | Professional incident reports with charts |
+| 🌐 **No Local GPU** | LLM runs remotely — works on any machine |
 
-## Quick Start (macOS)
+---
+
+## Quick Start
 
 ### Prerequisites
 - Python 3.9+
-- 2GB free disk space
-- macOS 11+
+- A free [HuggingFace account](https://huggingface.co/join) (for AI analysis)
 
-### Installation
+### 1. Clone the Repository
 
 ```bash
-# Clone or extract the project
-cd forensicx
+git clone https://github.com/YOUR_USERNAME/ForensicX.git
+cd ForensicX
+```
 
-# Make startup script executable
+### 2. Set Up HuggingFace Token (for AI-powered analysis)
+
+1. Go to [https://huggingface.co/settings/tokens](https://huggingface.co/settings/tokens)
+2. Click **"New token"** → select **"Read"** → copy the token
+3. Create a `.env` file in the project root:
+
+```bash
+cp .env.example .env
+# Edit .env and paste your token:
+# HF_TOKEN=hf_your_token_here
+```
+
+> ⚠️ The `.env` file is in `.gitignore` — it will **never** be committed to GitHub.
+
+### 3. Start the Backend
+
+```bash
 chmod +x backend/run_backend.sh
-
-# Run the startup script
 ./backend/run_backend.sh
 ```
 
-The system will:
+The script will:
 1. Create a Python virtual environment
 2. Install all dependencies
-3. Start the backend server at http://localhost:8000
+3. Start the server at **http://localhost:8000**
 
-### Usage
+### 4. Use the App
 
-1. Open browser: `http://localhost:8000`
-2. Drag-and-drop log files or click to upload
-3. Click "Run Analysis" to analyze logs
-4. View results in Dashboard, Report, Graphs, or Q&A tabs
-5. Download PDF reports as needed
+1. Open **http://localhost:8000** in your browser
+2. Drag-and-drop a log file (or click to upload)
+3. Click **"Run Analysis"**
+4. View results in **Dashboard**, **Report**, **Graphs**, or **Q&A** tabs
+5. Download the PDF report
+
+---
 
 ## Log Format Support
 
-### Process Logs
-CSV format with columns: timestamp, process_id, process_name, flag
+### Process Logs (CSV)
 ```
+timestamp, process_id, process_name, flag
 2025-11-01 10:30:45, 1234, notepad.exe, start
-2025-11-01 10:31:12, 1234, notepad.exe, end
 ```
 
-### Network Flow Logs
-CSV format: src_ip, duration, dst_ip, dst_port, bytes_out, bytes_in
+### Network Flow Logs (CSV)
 ```
-192.168.1.100, 5.2, 192.168.1.1, 443, 1024, 2048
+src_ip, duration, dst_ip, dst_port, bytes_out, bytes_in
+192.168.1.100, 5.2, 203.0.113.1, 443, 1024, 2048
 ```
 
-### DNS Logs
-CSV format: timestamp, query_type, domain, response
+### DNS Logs (CSV)
 ```
+timestamp, query_type, domain, response
 2025-11-01 10:30:45, A, malicious.xyz, 192.0.2.1
 ```
 
-## Optional: Enable LLM
+---
 
-To enable advanced insights using Phi-3-mini model:
+## AI Analysis (HuggingFace)
 
-1. Download model: [huggingface.co/TheBloke/Phi-3-mini-4k-instruct-GGUF](https://huggingface.co/TheBloke/Phi-3-mini-4k-instruct-GGUF)
-2. Place `Phi-3-mini-4k-instruct-q4.gguf` in `backend/models/`
-3. Restart the backend
-4. LLM will be automatically detected and enabled
+ForensicX uses the **HuggingFace Inference API** (free tier) with:
+
+> **`mistralai/Mistral-7B-Instruct-v0.3`**
+
+- ✅ **Free** — requires only a free HuggingFace account
+- ✅ **No GPU** — runs on HuggingFace's servers
+- ✅ **No download** — no 4GB model file needed
+- ✅ **Fallback** — if token is absent, heuristic analysis still works
+
+### Without AI (heuristic mode)
+The system still detects threats using a 9-layer heuristic engine covering:
+brute force, privilege escalation, malware signatures, port scanning, lateral movement, data exfiltration, SQL injection, APT indicators, and more.
+
+---
 
 ## Project Structure
 
 ```
-forensicx/
+ForensicX/
+├── .env.example          # Template for environment variables
+├── .gitignore
+├── render.yaml           # Render.com deployment config
+├── README.md
 ├── backend/
 │   ├── app/
-│   │   ├── main.py          # FastAPI routes
-│   │   ├── analyzer.py      # Log analysis
-│   │   ├── chat_manager.py  # Q&A
-│   │   ├── visualizer.py    # Charts/PDF
-│   │   ├── llm_service.py   # LLM integration
-│   │   └── config.py        # Config
-│   ├── models/              # LLM models (optional)
-│   ├── data/                # Logs, reports, chat
+│   │   ├── main.py       # FastAPI routes
+│   │   ├── analyzer.py   # 9-layer heuristic engine
+│   │   ├── chat_manager.py # Q&A chat logic
+│   │   ├── visualizer.py # Charts & PDF generation
+│   │   ├── llm_service.py # HuggingFace LLM integration
+│   │   ├── config.py     # Configuration & env vars
+│   │   └── utils.py      # File & data utilities
+│   ├── data/             # Runtime data (gitignored)
+│   │   ├── logs/         # Uploaded log files
+│   │   ├── reports/      # Generated PDFs & charts
+│   │   └── chats/        # Chat histories
 │   ├── requirements.txt
-│   └── run.py
-├── frontend/
-│   └── public/
-│       ├── index.html       # UI
-│       └── controller.js    # JavaScript
-└── README.md
+│   ├── run.py
+│   └── run_backend.sh    # Startup script
+└── frontend/
+    └── public/
+        ├── index.html    # Dashboard UI
+        └── app.js        # Frontend logic
 ```
+
+---
 
 ## API Reference
 
-### Upload & Analyze
-```
-POST /api/upload
-- Accepts: multipart/form-data with file
-- Returns: Analysis result with incidents and metrics
-```
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/health` | Health check |
+| `GET` | `/api/status` | System statistics |
+| `POST` | `/api/upload` | Upload & analyze log file |
+| `GET` | `/api/analyses` | List all analyses |
+| `GET` | `/api/analysis/{id}` | Get specific analysis |
+| `POST` | `/api/chat/{id}` | Q&A about an analysis |
+| `GET` | `/api/chat/{id}/history` | Get chat history |
+| `POST` | `/api/report/pdf/{id}` | Generate PDF report |
+| `GET` | `/api/chart/{type}/{id}` | Get chart image |
 
-### List Analyses
-```
-GET /api/analyses
-- Returns: Array of all analyses with summary statistics
-```
+---
 
-### Get Analysis Detail
-```
-GET /api/analysis/{log_id}
-- Returns: Detailed analysis including incidents and IOCs
-```
+## Deploy to Render (Free Cloud Hosting)
 
-### Chat Q&A
-```
-POST /api/chat/{log_id}
-- Body: {"question": "..."}
-- Returns: {"answer": "..."}
-```
+1. Push to GitHub
+2. Create a new **Web Service** at [render.com](https://render.com)
+3. Connect your repository
+4. Render will auto-detect `render.yaml`
+5. In the Render dashboard → **Environment** → add `HF_TOKEN` as a secret
 
-### Download Report
-```
-GET /api/report/{log_id}
-- Returns: PDF file
-```
-
-### Get Charts
-```
-GET /api/chart/severity/{log_id}
-GET /api/chart/timeline/{log_id}
-- Returns: PNG chart images
-```
+---
 
 ## Troubleshooting
 
@@ -154,94 +176,25 @@ rm -rf backend/venv
 ./backend/run_backend.sh
 ```
 
-**Dependencies failing?**
-```bash
-python3 -m pip install --upgrade pip
-pip install -r backend/requirements.txt --force-reinstall
-```
+**AI analysis not working?**
+- Check your `.env` file has `HF_TOKEN=hf_...`
+- Verify the token is valid at https://huggingface.co/settings/tokens
+- The system will fall back to heuristic analysis if the token is missing/invalid
 
-## Performance Notes
+**HuggingFace rate limit?**
+- Free tier allows ~30 requests/minute
+- The system retries automatically once on rate limit
+- For heavy use, consider [HuggingFace PRO](https://huggingface.co/pricing)
 
-- Analyzes log files up to 50MB
-- Keeps last 100 analyses in history
-- Charts generated with matplotlib
-- PDF reports use FPDF library
-- LLM inference (if enabled) takes 5-10 seconds per query
-
-## Security
-
-- All processing is local (no external APIs)
-- No telemetry or tracking
-- File uploads stored in `backend/data/logs/`
-- Analysis history in `backend/data/analyses.json`
-- Chat history in `backend/data/chats/`
+---
 
 ## License
 
-MIT License - See project for details
-
-## Support
-
-For issues or questions, please refer to the API documentation or check backend logs.
+MIT License
 
 ---
 
-**Version:** 1.0.0  
-**Last Updated:** 2025-11-09  
-**Tested:** Python 3.9-3.11, macOS 12+
-```
-
----
-
-## COMPLETE FILE LIST & DEPLOYMENT
-
-### Quick Deployment Checklist
-
-```
- backend/app/__init__.py          
- backend/app/config.py            
- backend/app/utils.py             
- backend/app/analyzer.py          
- backend/app/visualizer.py        
- backend/app/llm_service.py       
- backend/app/chat_manager.py      
- backend/app/main.py              
- backend/run.py                   
- backend/requirements.txt          
- backend/run_backend.sh            
- frontend/public/index.html        
- frontend/public/controller.js     
- README.md                         
-```
-
-### File Size Summary
-- Total backend code: ~1200 lines of Python
-- Total frontend code: ~500 lines of JavaScript + HTML
-- All dependencies pinned for macOS ARM64 compatibility
-- Zero external API calls - fully offline
-
-### Running the System
-
-```bash
-cd forensicx/backend
-chmod +x run_backend.sh
-./run_backend.sh
-```
-
-Then open: http://localhost:8000
-
----
-
-## KEY IMPROVEMENTS OVER PROVIDED CODE
-
-1. **Fixed Backend-Frontend Communication** - Proper CORS, content-type headers, async handling
-2. **Complete Analyzer** - 150+ line heuristic engine with multiple log type support
-3. **LLM Integration** - Optional Phi-3 model with graceful fallback
-4. **PDF Generation** - FPDF implementation with proper formatting
-5. **Chart Generation** - Matplotlib-based severity/timeline charts
-6. **Error Handling** - Try-catch, logging, graceful degradation
-7. **Data Persistence** - JSON-based analyses and chat history
-8. **macOS M2 Support** - Explicit requirements and ARM64 setup
-9. **Production Ready** - Environment config, startup scripts, documentation
-10. **Fully Offline** - No external dependencies, works disconnected
-
+**Version:** 2.0.0  
+**Updated:** 2026-06-09  
+**Python:** 3.9–3.12  
+**LLM:** HuggingFace Inference API (mistralai/Mistral-7B-Instruct-v0.3)

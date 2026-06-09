@@ -142,23 +142,32 @@ def _comprehensive_analysis(filename, text, lines, start_time):
     recommendations = _generate_comprehensive_recommendations(incidents, file_metrics, ioc_set)
     elapsed = time.time() - start_time
 
-    # Place analysis_time and timestamp in summary['metadata']
+    # Build executive summary text
+    crit = severity_count.get('critical', 0)
+    high = severity_count.get('high', 0)
+    med  = severity_count.get('medium', 0)
+    low  = severity_count.get('low', 0)
+    executive_text = (
+        f"Heuristic analysis of '{filename}' detected {len(incidents)} security incidents "
+        f"across {len(lines)} log events: {crit} critical, {high} high, {med} medium, {low} low severity. "
+        f"A total of {len(ioc_set)} indicators of compromise were identified. "
+        f"Review the detailed findings and recommendations below to prioritize your response."
+    )
+
     summary = {
-        'file': filename,
-        'lines': len(lines),
+        'executive': executive_text,
         'metadata': {
+            'file': filename,
+            'lines': len(lines),
             'analysis_time': elapsed,
             'incident_count': len(incidents),
-            'timestamp': datetime.now().isoformat()
+            'timestamp': datetime.now().isoformat(),
         }
     }
-    
+
     print(f"\nAnalysis complete: {len(incidents)} incidents detected in {elapsed:.2f}s")
-    print(f"Critical: {severity_count.get('critical', 0)}")
-    print(f"High: {severity_count.get('high', 0)}")
-    print(f"Medium: {severity_count.get('medium', 0)}")
-    print(f"Low: {severity_count.get('low', 0)}")
-    
+    print(f"Critical: {crit} | High: {high} | Medium: {med} | Low: {low}")
+
     iocs_list = [
         ioc if isinstance(ioc, str) else str(ioc)
         for ioc in list(ioc_set)

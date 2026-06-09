@@ -1,8 +1,24 @@
-fastapi==0.104.1
-uvicorn[standard]==0.24.0
-python-multipart==0.0.6
-pydantic==2.5.0
-fpdf2==2.7.6
-matplotlib==3.8.2
-numpy==1.24.3
-reportlab==4.0.7
+# ForensicX Backend Dependencies
+# Migrated to HuggingFace hosted LLM (no local model required)
+
+# Web framework
+fastapi>=0.110.0
+uvicorn[standard]>=0.29.0
+python-multipart>=0.0.9
+
+# Data validation
+pydantic>=2.6.0
+
+# HuggingFace Inference API (replaces llama_cpp)
+huggingface_hub>=0.23.0
+
+# Environment variable support
+python-dotenv>=1.0.0
+
+# PDF generation
+fpdf2>=2.7.9
+reportlab>=4.1.0
+
+# Charts
+matplotlib>=3.9.0
+numpy>=1.26.4

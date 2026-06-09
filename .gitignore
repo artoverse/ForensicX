@@ -16,9 +16,10 @@ env/
 .env/
 .venv/
 
-# Environment variables
+# Environment variables (keep .env.example but never commit secrets)
 .env
 *.env
+!.env.example
 
 # Data & runtime files (user-generated, not part of source)
 backend/data/logs/

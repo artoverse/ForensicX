@@ -10,5 +10,12 @@ services:
         value: "false"
       - key: PYTHON_VERSION
         value: "3.11.0"
+      # HuggingFace API Token — set this in the Render dashboard (keep secret)
+      # Get a free token at: https://huggingface.co/settings/tokens
+      - key: HF_TOKEN
+        sync: false   # Render will prompt you to enter this secret manually
+      # Optional: override the LLM model
+      - key: HF_MODEL
+        value: "mistralai/Mistral-7B-Instruct-v0.3"
     healthCheckPath: /health
     autoDeploy: true

@@ -1,5 +1,5 @@
 #!/bin/bash
-# ForensicX Backend Startup Script (macOS M2 / ARM64 compatible)
+# ForensicX Backend Startup Script
 
 set -e
 
@@ -15,6 +15,18 @@ fi
 PYTHON_VERSION=$(python3 --version | awk '{print $2}')
 echo "✅ Python $PYTHON_VERSION found"
 
+# Check for .env file
+ENV_FILE="../.env"
+if [ -f "$ENV_FILE" ]; then
+    echo "✅ Found .env file — environment variables will be loaded"
+else
+    echo "⚠️  No .env file found at project root"
+    echo "   To enable AI-powered analysis, create a .env file with:"
+    echo "   HF_TOKEN=hf_your_token_here"
+    echo "   Get a free token at: https://huggingface.co/settings/tokens"
+    echo ""
+fi
+
 # Create virtual environment if not exists
 if [ ! -d "venv" ]; then
     echo "📦 Creating virtual environment..."
@@ -25,22 +37,17 @@ fi
 echo "🔌 Activating virtual environment..."
 source venv/bin/activate
 
-# Install dependencies
+# Install/upgrade dependencies
 echo "📥 Installing dependencies..."
-pip install --upgrade pip
-pip install -r requirements.txt
-
-# Check for LLM model
-if [ -f "models/Phi-3-mini-4k-instruct-q4.gguf" ]; then
-    echo "✅ LLM model found - advanced insights enabled"
-else
-    echo "⚠️  LLM model not found - using heuristic analysis only"
-    echo "   Place 'Phi-3-mini-4k-instruct-q4.gguf' in models/ directory to enable LLM"
-fi
+pip install --upgrade pip --quiet
+pip install -r requirements.txt --quiet
 
 # Create data directories
 mkdir -p data/{logs,reports,chats}
 
 # Run backend
-echo "🚀 Starting ForensicX Backend..."
+echo ""
+echo "🚀 Starting ForensicX Backend at http://localhost:8000"
+echo "   Open your browser at: http://localhost:8000"
+echo ""
 python3 run.py

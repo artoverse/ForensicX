@@ -2,6 +2,22 @@
 from pathlib import Path
 import os
 
+# Load .env file if present (for local development)
+try:
+    from dotenv import load_dotenv
+    _env_file = Path(__file__).resolve().parent.parent.parent / '.env'
+    if _env_file.exists():
+        load_dotenv(_env_file)
+        print(f"✅ Loaded .env from: {_env_file}")
+    else:
+        # Also try loading from the backend dir
+        _env_file_backend = Path(__file__).resolve().parent.parent / '.env'
+        if _env_file_backend.exists():
+            load_dotenv(_env_file_backend)
+            print(f"✅ Loaded .env from: {_env_file_backend}")
+except ImportError:
+    pass  # python-dotenv not installed yet (first run)
+
 # Base paths
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / 'data'
@@ -22,16 +38,17 @@ API_RELOAD = os.getenv('API_RELOAD', 'false').lower() == 'true'  # Off in produc
 # Frontend path (served as static files by FastAPI)
 FRONTEND_DIR = ROOT.parent / 'frontend' / 'public'
 
-# LLM Configuration - auto-detect model; graceful fallback if not found
-MODEL_PATH = None
-if MODELS_DIR.exists():
-    models = list(MODELS_DIR.glob('*.gguf'))
-    if models:
-        MODEL_PATH = models[0]
-        print(f"Found model: {MODEL_PATH.name}")
+# ============================================================================
+# HuggingFace LLM Configuration (remote API — no local model required)
+# ============================================================================
+HF_TOKEN = os.getenv('HF_TOKEN', '').strip()
+HF_MODEL = os.getenv('HF_MODEL', 'mistralai/Mistral-7B-Instruct-v0.3')
 
-USE_LLM = MODEL_PATH is not None
+# LLM is enabled when a HuggingFace API token is provided
+USE_LLM = bool(HF_TOKEN)
+
 if USE_LLM:
-    print(f"✅ LLM enabled: {MODEL_PATH.name}")
+    print(f"✅ HuggingFace LLM enabled: {HF_MODEL}")
 else:
-    print("⚠️  LLM model not found — running in heuristic-only mode")
+    print("⚠️  HF_TOKEN not set — running in heuristic-only mode")
+    print("   Set HF_TOKEN in your .env file to enable AI-powered analysis")
