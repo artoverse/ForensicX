@@ -16,6 +16,6 @@ services:
         sync: false   # Render will prompt you to enter this secret manually
       # Optional: override the LLM model
       - key: HF_MODEL
-        value: "mistralai/Mistral-7B-Instruct-v0.3"
+        value: "meta-llama/Meta-Llama-3-8B-Instruct"
     healthCheckPath: /health
     autoDeploy: true

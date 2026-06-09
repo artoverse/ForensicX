@@ -19,6 +19,7 @@ class LLMService:
         self.available = False
         self.client = None
         self.model = HF_MODEL
+        self.model_label = HF_MODEL.split('/')[-1]  # e.g. "Meta-Llama-3-8B-Instruct"
 
         if not USE_LLM:
             print("⚠️  LLM disabled — set HF_TOKEN in .env to enable AI analysis")
@@ -32,13 +33,22 @@ class LLMService:
                 token=HF_TOKEN,
                 timeout=60,
             )
-            self.available = True
-            print(f"✅ HuggingFace LLM ready: {self.model}")
+            # ── Real connectivity test: send a tiny prompt to confirm the model works ──
+            print(f"🔍 Testing HuggingFace connection to {self.model}...")
+            test_resp = self.client.chat_completion(
+                messages=[{"role": "user", "content": "Reply with one word: ready"}],
+                max_tokens=10,
+            )
+            if test_resp and test_resp.choices:
+                self.available = True
+                print(f"✅ HuggingFace LLM ready: {self.model}")
+            else:
+                print("❌ HuggingFace API returned empty test response")
 
         except ImportError:
             print("❌ huggingface_hub not installed — run: pip install huggingface_hub")
         except Exception as e:
-            print(f"❌ HuggingFace client init failed: {e}")
+            print(f"❌ HuggingFace connection test failed: {e}")
 
     # -------------------------------------------------------------------------
     # Internal: Call the HF Inference API

@@ -62,11 +62,12 @@ def save_base64_image(data_url, out_path):
 @app.get('/health')
 def health_check():
     """Health check endpoint"""
-    logger.info("Health check requested")
+    from .llm_service import llm_service
     return {
         'status': 'healthy',
-        'version': '1.0.0',
-        'llm_available': USE_LLM
+        'version': '2.0.0',
+        'llm_available': llm_service.available,
+        'model_name': llm_service.model_label if llm_service.available else None,
     }
 
 

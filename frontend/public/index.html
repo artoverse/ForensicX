@@ -308,6 +308,7 @@
             .charts-grid { grid-template-columns: 1fr; }
         }
     </style>
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
     <div class="app-container">
@@ -320,30 +321,30 @@
 
             <ul class="nav-menu">
                 <li class="nav-item active" data-page="dashboard">
-                    <span class="nav-icon">📊</span>
+                    <i data-lucide="layout-dashboard" class="nav-icon"></i>
                     <span>Dashboard</span>
                 </li>
                 <li class="nav-item" data-page="report">
-                    <span class="nav-icon">📋</span>
+                    <i data-lucide="file-text" class="nav-icon"></i>
                     <span>Report</span>
                 </li>
                 <li class="nav-item" data-page="graphs">
-                    <span class="nav-icon">📈</span>
+                    <i data-lucide="bar-chart-2" class="nav-icon"></i>
                     <span>Graphs</span>
                 </li>
                 <li class="nav-item" data-page="recommendations">
-                    <span class="nav-icon">💡</span>
+                    <i data-lucide="lightbulb" class="nav-icon"></i>
                     <span>Recommendations</span>
                 </li>
                 <li class="nav-item" data-page="qa">
-                    <span class="nav-icon">💬</span>
+                    <i data-lucide="message-square" class="nav-icon"></i>
                     <span>Q &amp; A</span>
                 </li>
             </ul>
 
             <div class="model-info">
                 <div class="model-label">Analysis Engine</div>
-                <div class="model-name">Mistral-7B via HuggingFace</div>
+                <div class="model-name" style="display:flex; align-items:center; gap:6px;">Checking status...</div>
             </div>
         </div>
 
@@ -374,7 +375,7 @@
                 <div class="metrics-grid">
                     <div class="metric-card">
                         <div class="metric-header">
-                            <div class="metric-icon">📁</div>
+                            <div class="metric-icon"><i data-lucide="folder" width="36" height="36"></i></div>
                             <div class="metric-change positive"><span>↑</span><span>+0</span></div>
                         </div>
                         <div class="metric-value" id="totalFiles">0</div>
@@ -382,7 +383,7 @@
                     </div>
                     <div class="metric-card">
                         <div class="metric-header">
-                            <div class="metric-icon">📊</div>
+                            <div class="metric-icon"><i data-lucide="activity" width="36" height="36"></i></div>
                             <div class="metric-change positive"><span>↑</span><span>+0%</span></div>
                         </div>
                         <div class="metric-value" id="totalEvents">0</div>
@@ -390,7 +391,7 @@
                     </div>
                     <div class="metric-card">
                         <div class="metric-header">
-                            <div class="metric-icon">🔴</div>
+                            <div class="metric-icon"><i data-lucide="alert-triangle" width="36" height="36" color="var(--danger)"></i></div>
                             <div class="metric-change negative"><span>↑</span><span>Alert</span></div>
                         </div>
                         <div class="metric-value" id="criticalAlerts">0</div>
@@ -405,7 +406,7 @@
                     </div>
 
                     <div class="file-upload-section" id="uploadSection" onclick="document.getElementById('fileInput').click()">
-                        <div class="upload-icon">📤</div>
+                        <div class="upload-icon"><i data-lucide="upload-cloud" width="48" height="48"></i></div>
                         <div class="upload-text">Click to upload or drag &amp; drop log files</div>
                         <div class="upload-subtext">Supported: .txt, .log, .csv — Max 50 MB per file</div>
                         <input type="file" id="fileInput" multiple accept=".txt,.log,.csv" style="display:none">
@@ -414,8 +415,8 @@
                     <div id="fileList"></div>
 
                     <div style="margin-top:20px; display:flex; gap:12px; flex-wrap:wrap;">
-                        <button class="btn btn-primary" id="runAnalysisBtn" onclick="startAnalysis()">▶ Run Analysis</button>
-                        <button class="btn btn-secondary" onclick="clearFileList()">🗑 Clear</button>
+                        <button class="btn btn-primary" id="runAnalysisBtn" onclick="startAnalysis()"><i data-lucide="play" width="16" height="16"></i> Run Analysis</button>
+                        <button class="btn btn-secondary" onclick="clearFileList()"><i data-lucide="trash-2" width="16" height="16"></i> Clear</button>
                     </div>
 
                     <div class="progress-container" id="progressContainer" style="display:none; margin-top:16px;">
@@ -475,9 +476,9 @@
                     <div class="card-header">
                         <h2 class="card-title">📄 Forensic Analysis Report</h2>
                         <div class="card-actions">
-                            <button class="btn btn-primary" onclick="downloadPDF()">⬇️ Download PDF</button>
-                            <button class="btn btn-secondary" onclick="downloadJSON()">⬇️ Download JSON</button>
-                            <button class="btn btn-primary" onclick="openChatForCurrentLog()">💬 Ask AI</button>
+                            <button class="btn btn-primary" onclick="downloadPDF()"><i data-lucide="download" width="16" height="16"></i> Download PDF</button>
+                            <button class="btn btn-secondary" onclick="downloadJSON()"><i data-lucide="download" width="16" height="16"></i> Download JSON</button>
+                            <button class="btn btn-primary" onclick="openChatForCurrentLog()"><i data-lucide="message-circle" width="16" height="16"></i> Ask AI</button>
                         </div>
                     </div>
 
@@ -557,7 +558,7 @@
                     <div class="chat-container">
                         <div class="chat-messages" id="chatMessages">
                             <div class="chat-message bot">
-                                <div class="message-avatar bot">🤖</div>
+                                <div class="message-avatar bot"><i data-lucide="bot" color="white"></i></div>
                                 <div class="message-content">
                                     Hello! I'm your ForensicX AI assistant. Upload and analyse a log file, then ask me anything about the findings — threats, IOCs, recommendations, attack timelines, etc.
                                 </div>
@@ -565,10 +566,10 @@
                         </div>
 
                         <div class="quick-questions">
-                            <button class="quick-question-btn" onclick="askQuestion('What is the attack timeline?')">⏱ Timeline?</button>
-                            <button class="quick-question-btn" onclick="askQuestion('What are the top IOCs?')">🎯 Top IOCs?</button>
-                            <button class="quick-question-btn" onclick="askQuestion('Which systems were affected?')">🖥 Systems?</button>
-                            <button class="quick-question-btn" onclick="askQuestion('What is the overall severity?')">🔴 Severity?</button>
+                            <button class="quick-question-btn" onclick="askQuestion('What is the attack timeline?')"><i data-lucide="clock" width="14" height="14"></i> Timeline?</button>
+                            <button class="quick-question-btn" onclick="askQuestion('What are the top IOCs?')"><i data-lucide="target" width="14" height="14"></i> Top IOCs?</button>
+                            <button class="quick-question-btn" onclick="askQuestion('Which systems were affected?')"><i data-lucide="monitor" width="14" height="14"></i> Systems?</button>
+                            <button class="quick-question-btn" onclick="askQuestion('What is the overall severity?')"><i data-lucide="alert-circle" width="14" height="14"></i> Severity?</button>
                         </div>
 
                         <div class="chat-input-container">

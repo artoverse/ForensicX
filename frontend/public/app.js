@@ -13,11 +13,14 @@ const API_ROOT = '';
 
 // ===================== INITIALIZATION =====================
 document.addEventListener('DOMContentLoaded', function () {
+    console.log('[ForensicX] Initializing...');
     setupNavigation();
     setupTabs();
     setupFileUpload();
     setupChat();
     loadAnalyses();
+    checkModelStatus();
+    lucide.createIcons();
     document.getElementById('analyzedDate').textContent = new Date().toLocaleDateString();
 });
 
@@ -627,4 +630,32 @@ function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+}
+
+async function checkModelStatus() {
+    const modelNameEl = document.querySelector('.model-name');
+    if (modelNameEl) {
+        modelNameEl.innerHTML = '<span style="color:var(--text-secondary); font-size:12px;">Checking...</span>';
+    }
+    try {
+        const response = await fetch(`${API_ROOT}/health`);
+        if (!response.ok) throw new Error('Health check failed');
+        const data = await response.json();
+
+        if (modelNameEl) {
+            if (data.llm_available) {
+                const modelShort = data.model_name || 'LLM';
+                modelNameEl.innerHTML = `<i data-lucide="check-circle" color="var(--success)" width="16" height="16"></i> <span style="color:var(--success); font-weight:600;">Connected</span><br><span style="color:var(--text-secondary); font-size:11px; margin-top:4px; display:block;">${modelShort}</span>`;
+            } else {
+                modelNameEl.innerHTML = '<i data-lucide="alert-triangle" color="var(--warning)" width="16" height="16"></i> <span style="color:var(--warning); font-weight:600;">Heuristic Mode</span><br><span style="color:var(--text-secondary); font-size:11px; display:block;">No LLM token set</span>';
+            }
+            lucide.createIcons();
+        }
+    } catch (e) {
+        console.error('Model status check failed:', e);
+        if (modelNameEl) {
+            modelNameEl.innerHTML = '<i data-lucide="x-circle" color="var(--danger)" width="16" height="16"></i> <span style="color:var(--danger); font-weight:600;">Disconnected</span>';
+            lucide.createIcons();
+        }
+    }
 }

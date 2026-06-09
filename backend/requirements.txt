@@ -21,4 +21,4 @@ reportlab>=4.1.0
 
 # Charts
 matplotlib>=3.9.0
-numpy>=1.26.4
+numpy<2
