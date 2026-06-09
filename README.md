@@ -1,200 +1,190 @@
-# ForensicX — Digital Forensic Analysis System
+# ForensicX — AI-Powered Digital Forensic Analysis System
 
-A production-ready digital forensic analyzer that processes security logs and detects anomalies using heuristics and optional AI analysis powered by **HuggingFace hosted LLM** (no local model required).
-
-## Features
-
-| Feature | Description |
-|---------|-------------|
-| 📋 **Log Analysis** | Process process, network flow, DNS, and red-team logs |
-| 🔍 **Anomaly Detection** | 9-layer heuristic engine detects 30+ threat types |
-| 🤖 **AI Analysis** | HuggingFace-powered deep analysis via Mistral-7B (free) |
-| 💬 **Q&A Chat** | Ask questions about findings in natural language |
-| 📊 **Dashboard** | Real-time visualization of incidents and IOCs |
-| 📄 **PDF Reports** | Professional incident reports with charts |
-| 🌐 **No Local GPU** | LLM runs remotely — works on any machine |
+> A final-year project I built for my Computer Science degree. It analyses security logs using a combination of heuristic rule-based detection and a hosted LLM (Mistral-7B via HuggingFace). No local GPU needed.
 
 ---
 
-## Quick Start
+## What it does
 
-### Prerequisites
+You upload a log file (process logs, network flows, DNS logs etc.), and the system:
+
+1. Runs it through a 9-layer heuristic engine that checks for things like brute-force attempts, privilege escalation, lateral movement, malware signatures, SQL injection, data exfiltration patterns and more
+2. Optionally uses Mistral-7B (via the free HuggingFace Inference API) for a deeper AI-generated summary
+3. Shows everything in a dashboard — charts, an IOC table, incident severity breakdown
+4. Lets you ask natural-language questions about the findings through a Q&A chat
+5. Exports a PDF report
+
+---
+
+## Screenshots
+
+> The dashboard after uploading a log file with several detected incidents.
+
+---
+
+## Tech stack
+
+| Part | What I used |
+|------|-------------|
+| Backend | Python · FastAPI · Uvicorn |
+| LLM | HuggingFace Inference API (Mistral-7B-Instruct-v0.3) — free, no local GPU |
+| Analysis | Custom heuristic engine (9 layers, 30+ threat patterns) |
+| PDF reports | ReportLab |
+| Charts | Chart.js 4 |
+| Frontend | Vanilla HTML / CSS / JavaScript |
+| Deployment | Render.com (free tier) |
+
+---
+
+## Setup
+
+### Requirements
 - Python 3.9+
-- A free [HuggingFace account](https://huggingface.co/join) (for AI analysis)
+- A free HuggingFace account (for AI-powered summaries — the app still works without it)
 
-### 1. Clone the Repository
+### 1. Clone
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/ForensicX.git
+git clone https://github.com/artoverse/ForensicX.git
 cd ForensicX
 ```
 
-### 2. Set Up HuggingFace Token (for AI-powered analysis)
+### 2. Get a HuggingFace token (optional but recommended)
 
-1. Go to [https://huggingface.co/settings/tokens](https://huggingface.co/settings/tokens)
-2. Click **"New token"** → select **"Read"** → copy the token
-3. Create a `.env` file in the project root:
+Go to [https://huggingface.co/settings/tokens](https://huggingface.co/settings/tokens), create a token (Read access is enough), then:
 
 ```bash
 cp .env.example .env
-# Edit .env and paste your token:
-# HF_TOKEN=hf_your_token_here
+# Open .env and paste your token:
+# HF_TOKEN=hf_xxxxxxxxxxxxxxxxx
 ```
 
-> ⚠️ The `.env` file is in `.gitignore` — it will **never** be committed to GitHub.
+If you skip this, the app still works — it just uses the heuristic engine only and skips the AI summary.
 
-### 3. Start the Backend
+### 3. Start the server
 
 ```bash
 chmod +x backend/run_backend.sh
 ./backend/run_backend.sh
 ```
 
-The script will:
-1. Create a Python virtual environment
-2. Install all dependencies
-3. Start the server at **http://localhost:8000**
-
-### 4. Use the App
-
-1. Open **http://localhost:8000** in your browser
-2. Drag-and-drop a log file (or click to upload)
-3. Click **"Run Analysis"**
-4. View results in **Dashboard**, **Report**, **Graphs**, or **Q&A** tabs
-5. Download the PDF report
+This creates a virtual environment, installs dependencies, and starts the server at **http://localhost:8000**. Open that in your browser.
 
 ---
 
-## Log Format Support
+## Log file format
 
-### Process Logs (CSV)
+The system accepts plain text / CSV logs. Some examples of what it can parse:
+
+**Process logs:**
 ```
-timestamp, process_id, process_name, flag
-2025-11-01 10:30:45, 1234, notepad.exe, start
+2025-11-01 10:30:45, 1234, powershell.exe, start
+2025-11-01 10:31:00, 5678, mimikatz.exe, start
 ```
 
-### Network Flow Logs (CSV)
+**Network logs:**
 ```
 src_ip, duration, dst_ip, dst_port, bytes_out, bytes_in
-192.168.1.100, 5.2, 203.0.113.1, 443, 1024, 2048
+192.168.1.10, 3.2, 203.0.113.5, 4444, 102400, 512
 ```
 
-### DNS Logs (CSV)
+**DNS logs:**
 ```
 timestamp, query_type, domain, response
-2025-11-01 10:30:45, A, malicious.xyz, 192.0.2.1
+2025-11-01 10:32:00, A, malicious-c2.xyz, 192.0.2.1
 ```
 
 ---
 
-## AI Analysis (HuggingFace)
+## How the heuristic detection works
 
-ForensicX uses the **HuggingFace Inference API** (free tier) with:
+I built a 9-layer pipeline that processes the log line by line:
 
-> **`mistralai/Mistral-7B-Instruct-v0.3`**
+| Layer | What it checks |
+|-------|----------------|
+| 1 | Pattern matching — known malware names, tools (mimikatz, netcat, etc.) |
+| 2 | Behavioural patterns — process chains, parent-child relationships |
+| 3 | Network anomalies — port scanning, unusual destinations, high byte counts |
+| 4 | Auth failures — brute-force thresholds, repeated failed logins |
+| 5 | Privilege escalation — sudo abuse, UAC bypass patterns |
+| 6 | Data exfiltration — large outbound transfers, suspicious timing |
+| 7 | Malware indicators — file extensions, obfuscated commands |
+| 8 | APT patterns — multi-stage attack sequences |
+| 9 | IOC extraction — IPs, domains, hashes |
 
-- ✅ **Free** — requires only a free HuggingFace account
-- ✅ **No GPU** — runs on HuggingFace's servers
-- ✅ **No download** — no 4GB model file needed
-- ✅ **Fallback** — if token is absent, heuristic analysis still works
-
-### Without AI (heuristic mode)
-The system still detects threats using a 9-layer heuristic engine covering:
-brute force, privilege escalation, malware signatures, port scanning, lateral movement, data exfiltration, SQL injection, APT indicators, and more.
-
----
-
-## Project Structure
-
-```
-ForensicX/
-├── .env.example          # Template for environment variables
-├── .gitignore
-├── render.yaml           # Render.com deployment config
-├── README.md
-├── backend/
-│   ├── app/
-│   │   ├── main.py       # FastAPI routes
-│   │   ├── analyzer.py   # 9-layer heuristic engine
-│   │   ├── chat_manager.py # Q&A chat logic
-│   │   ├── visualizer.py # Charts & PDF generation
-│   │   ├── llm_service.py # HuggingFace LLM integration
-│   │   ├── config.py     # Configuration & env vars
-│   │   └── utils.py      # File & data utilities
-│   ├── data/             # Runtime data (gitignored)
-│   │   ├── logs/         # Uploaded log files
-│   │   ├── reports/      # Generated PDFs & charts
-│   │   └── chats/        # Chat histories
-│   ├── requirements.txt
-│   ├── run.py
-│   └── run_backend.sh    # Startup script
-└── frontend/
-    └── public/
-        ├── index.html    # Dashboard UI
-        └── app.js        # Frontend logic
-```
+Each incident gets a severity (Critical / High / Medium / Low) and a detail message.
 
 ---
 
-## API Reference
+## API endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `GET` | `/health` | Health check |
-| `GET` | `/api/status` | System statistics |
-| `POST` | `/api/upload` | Upload & analyze log file |
-| `GET` | `/api/analyses` | List all analyses |
-| `GET` | `/api/analysis/{id}` | Get specific analysis |
-| `POST` | `/api/chat/{id}` | Q&A about an analysis |
-| `GET` | `/api/chat/{id}/history` | Get chat history |
-| `POST` | `/api/report/pdf/{id}` | Generate PDF report |
-| `GET` | `/api/chart/{type}/{id}` | Get chart image |
+| GET | `/health` | Health check |
+| POST | `/api/upload` | Upload & analyse a log file |
+| GET | `/api/analyses` | List all past analyses |
+| GET | `/api/analysis/{id}` | Get one analysis by ID |
+| POST | `/api/chat/{id}` | Ask a question about an analysis |
+| GET | `/api/chat/{id}/history` | Get chat history |
+| POST | `/api/report/pdf/{id}` | Generate PDF report |
+
+Interactive docs are at `http://localhost:8000/docs` (Swagger UI).
 
 ---
 
-## Deploy to Render (Free Cloud Hosting)
+## Project structure
+
+```
+ForensicX/
+├── .env.example
+├── .gitignore
+├── render.yaml
+├── README.md
+├── backend/
+│   ├── app/
+│   │   ├── main.py          # FastAPI routes
+│   │   ├── analyzer.py      # heuristic detection engine
+│   │   ├── llm_service.py   # HuggingFace API integration
+│   │   ├── chat_manager.py  # Q&A logic
+│   │   ├── visualizer.py    # charts + PDF
+│   │   ├── config.py        # env vars, paths
+│   │   └── utils.py
+│   ├── requirements.txt
+│   ├── run.py
+│   └── run_backend.sh
+└── frontend/
+    └── public/
+        ├── index.html
+        └── app.js
+```
+
+---
+
+## Deployment (Render.com)
+
+The `render.yaml` is already configured. Just:
 
 1. Push to GitHub
-2. Create a new **Web Service** at [render.com](https://render.com)
-3. Connect your repository
-4. Render will auto-detect `render.yaml`
-5. In the Render dashboard → **Environment** → add `HF_TOKEN` as a secret
+2. Create a new Web Service on [render.com](https://render.com) and connect the repo
+3. Add your `HF_TOKEN` as a secret environment variable in the Render dashboard
 
 ---
 
-## Troubleshooting
+## Known limitations
 
-**Port 8000 already in use?**
-```bash
-lsof -i :8000
-kill -9 <PID>
-```
-
-**Virtual environment issues?**
-```bash
-rm -rf backend/venv
-./backend/run_backend.sh
-```
-
-**AI analysis not working?**
-- Check your `.env` file has `HF_TOKEN=hf_...`
-- Verify the token is valid at https://huggingface.co/settings/tokens
-- The system will fall back to heuristic analysis if the token is missing/invalid
-
-**HuggingFace rate limit?**
-- Free tier allows ~30 requests/minute
-- The system retries automatically once on rate limit
-- For heavy use, consider [HuggingFace PRO](https://huggingface.co/pricing)
+- Free HuggingFace tier has rate limits (~30 requests/minute). If you hit them, the system waits and retries once automatically, then falls back to heuristic-only mode.
+- The heuristic engine is rule-based, so it won't catch novel/unknown threats unless I add more patterns.
+- PDF generation is basic — it works, but it's not production-quality styled.
 
 ---
 
-## License
+## What I learned building this
 
-MIT License
+- FastAPI + Starlette for serving both API endpoints and a static frontend from one server
+- How to use the HuggingFace Inference API (much easier than running models locally)
+- Building a multi-layer text analysis pipeline from scratch
+- PDF generation with ReportLab (way more work than I expected)
 
 ---
 
-**Version:** 2.0.0  
-**Updated:** 2026-06-09  
-**Python:** 3.9–3.12  
-**LLM:** HuggingFace Inference API (mistralai/Mistral-7B-Instruct-v0.3)
+*Built as a final-year Computer Science project · 2025*
