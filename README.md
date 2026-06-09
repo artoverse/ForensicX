@@ -1,7 +1,7 @@
 # ForensicX — AI-Powered Digital Forensic Analysis System
 
 > A final-year project I built for my Computer Science degree. It analyses security logs using a combination of heuristic rule-based detection and a hosted LLM (Mistral-7B via HuggingFace). No local GPU needed.
-
+> Deployed URL : https://forensicx-9g3u.onrender.com
 ---
 
 ## What it does
