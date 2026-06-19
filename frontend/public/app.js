@@ -638,8 +638,8 @@ async function checkModelStatus() {
         modelNameEl.innerHTML = '<span style="color:var(--text-secondary); font-size:12px;">Checking...</span>';
     }
     try {
-        const response = await fetch(`${API_ROOT}/health`);
-        if (!response.ok) throw new Error('Health check failed');
+        const response = await fetch(`${API_ROOT}/health`, { cache: 'no-store' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
 
         if (modelNameEl) {
@@ -654,7 +654,7 @@ async function checkModelStatus() {
     } catch (e) {
         console.error('Model status check failed:', e);
         if (modelNameEl) {
-            modelNameEl.innerHTML = '<i data-lucide="x-circle" color="var(--danger)" width="16" height="16"></i> <span style="color:var(--danger); font-weight:600;">Disconnected</span>';
+            modelNameEl.innerHTML = `<i data-lucide="x-circle" color="var(--danger)" width="16" height="16"></i> <span style="color:var(--danger); font-weight:600;">Disconnected</span><br><span style="color:var(--danger); font-size:10px; display:block;">${e.message}</span>`;
             lucide.createIcons();
         }
     }
