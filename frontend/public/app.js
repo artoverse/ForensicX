@@ -594,9 +594,13 @@ function addChatMessage(role, content) {
     if (!chatMessages) return;
     const div = document.createElement('div');
     div.className = 'chat-message ' + (role === 'user' ? 'user' : 'bot');
+    const contentHtml = role === 'user' 
+        ? escapeHtml(content) 
+        : (typeof marked !== 'undefined' ? marked.parse(content) : escapeHtml(content).replace(/\n/g, '<br>'));
+        
     div.innerHTML = `
         <div class="message-avatar ${role}">${role === 'user' ? '👤' : '🤖'}</div>
-        <div class="message-content">${escapeHtml(content)}</div>
+        <div class="message-content markdown-body">${contentHtml}</div>
     `;
     chatMessages.appendChild(div);
     chatMessages.scrollTop = chatMessages.scrollHeight;

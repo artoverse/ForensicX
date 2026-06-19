@@ -275,6 +275,13 @@
         .chat-message.bot .message-content { background: rgba(255,255,255,0.06); border-bottom-left-radius: 4px; }
         .chat-message.user .message-content { background: linear-gradient(135deg, var(--primary), #FF5544); border-bottom-right-radius: 4px; }
 
+        .markdown-body p { margin-bottom: 10px; }
+        .markdown-body p:last-child { margin-bottom: 0; }
+        .markdown-body ul, .markdown-body ol { margin-left: 20px; margin-bottom: 10px; }
+        .markdown-body li { margin-bottom: 4px; }
+        .markdown-body strong { color: white; }
+        .markdown-body code { background: rgba(0,0,0,0.2); padding: 2px 5px; border-radius: 4px; font-family: monospace; font-size: 13px; }
+
         .quick-questions { display: flex; gap: 8px; flex-wrap: wrap; padding: 12px 20px; border-top: 1px solid var(--border); }
         .quick-question-btn {
             padding: 8px 14px; background: rgba(255,255,255,0.05); border: 1px solid var(--border);
@@ -584,6 +591,8 @@
 
     <!-- Chart.js from CDN — more reliable than local copy -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <!-- Marked.js for parsing LLM Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <!-- App logic — loaded AFTER DOM so defer is not needed -->
     <script src="app.js"></script>
 </body>
