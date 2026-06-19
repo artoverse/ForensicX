@@ -42,7 +42,7 @@ FRONTEND_DIR = ROOT.parent / 'frontend' / 'public'
 # HuggingFace LLM Configuration (remote API — no local model required)
 # ============================================================================
 HF_TOKEN = os.getenv('HF_TOKEN', '').strip()
-HF_MODEL = os.getenv('HF_MODEL', 'meta-llama/Llama-3.3-70B-Instruct')
+HF_MODEL = os.getenv('HF_MODEL', 'deepseek-ai/DeepSeek-R1')
 
 # LLM is enabled when a HuggingFace API token is provided
 USE_LLM = bool(HF_TOKEN)
