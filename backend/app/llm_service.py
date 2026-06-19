@@ -19,8 +19,7 @@ class LLMService:
         self.available = False
         self.client = None
         self.model = HF_MODEL
-        self.model_label = HF_MODEL.split('/')[-1]  # e.g. "Meta-Llama-3-8B-Instruct"
-
+        self.model_label = HF_MODEL.split('/')[-1] if HF_MODEL else "Unknown"
         if not USE_LLM:
             print("⚠️  LLM disabled — set HF_TOKEN in .env to enable AI analysis")
             return
