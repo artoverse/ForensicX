@@ -12,8 +12,9 @@ REQ_FILE = BACKEND_DIR / "requirements.txt"
 
 def setup_and_run():
     # If not running from the venv, we need to set it up and restart using the venv's Python
-    if sys.prefix == sys.base_prefix or not str(sys.executable).startswith(str(VENV_DIR)):
-        print("🔍 ForensicX Backend Startup (Auto-Venv)")
+    is_render = os.environ.get('RENDER') == 'true'
+    if not is_render and (sys.prefix == sys.base_prefix or not str(sys.executable).startswith(str(VENV_DIR))):
+        print("🔍 ForensicX Backend Startup (Auto-Venv)", flush=True)
         print("========================================")
         
         # 1. Create venv if missing
